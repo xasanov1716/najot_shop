@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
-import '../../../utils/colors/app_colors.dart';
+import '../../../utils/app_colors.dart';
 
 class GlobalButton extends StatefulWidget {
   const GlobalButton({

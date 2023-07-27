@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:najot_shop/ui/tab/home/home_screen.dart';
+import 'package:najot_shop/ui/tab/profile/profile_screen.dart';
 
 class AuthProvider with ChangeNotifier {
   final TextEditingController passwordController = TextEditingController();
@@ -7,6 +9,18 @@ class AuthProvider with ChangeNotifier {
   final TextEditingController userNameController = TextEditingController();
 
   bool isLoading = false;
+
+  List<Widget> screens = [
+    const HomeScreen(),
+    const ProfileScreen()
+  ];
+
+  int activeIndex =0;
+
+  void checkIndex(int index){
+    activeIndex=index;
+    notifyListeners();
+  }
 
   loginButtonPressed() {
     passwordController.clear();
@@ -20,6 +34,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Stream<User?> listenAuthState() => FirebaseAuth.instance.authStateChanges();
+  Stream<User?> listenAuthWithGoogle() => FirebaseAuth.instance.authStateChanges();
 
   Future<void> signUpUser(BuildContext context) async {
     String email = emailController.text;
@@ -98,14 +113,3 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 }
-
-// _checkAuthState() {
-//   // Stream<User?>
-//   FirebaseAuth.instance.authStateChanges().listen((User? user) {
-//     if (user == null) {
-//       print('User is currently signed out!');
-//     } else {
-//       print('User is signed in!');
-//     }
-//   });
-// }

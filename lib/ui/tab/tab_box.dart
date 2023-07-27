@@ -13,22 +13,19 @@ class TabBox extends StatefulWidget {
 class _TabBoxState extends State<TabBox> {
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AuthProvider>(context,listen: true);
     return Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Center(
-                child: Text("User Authenticated"),
-              ),
-              TextButton(
-                  onPressed: () {
-                    context.read<AuthProvider>().logOut(context);
-                  },
-                  child: const Text("Log Out"))
-            ],
-          ),
-        ));
+      body: provider.screens[provider.activeIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: provider.activeIndex,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+        ],
+        onTap: (index){
+          provider.checkIndex(index);
+        },
+      ),
+    );
   }
 }
