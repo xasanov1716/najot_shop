@@ -18,9 +18,9 @@ class App extends StatelessWidget {
           if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));
           } else if (snapshot.data == null) {
-            return AuthScreen();
+            return const AuthScreen();
           } else {
-            return TabBox();
+            return const TabBox();
           }
         },
       ),

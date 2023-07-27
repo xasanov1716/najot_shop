@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
-import '../../../utils/images/app_images.dart';
+import '../../../utils/app_images.dart';
 import '../widgets/global_button.dart';
 import '../widgets/global_login_with_screen.dart';
 import '../widgets/global_text_fields.dart';
