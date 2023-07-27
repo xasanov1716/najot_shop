@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
         context,
         MaterialPageRoute(
           builder: (context) {
-            return App();
+            return const App();
           },
         ),
       );
@@ -34,17 +34,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24),
           child: Text(
-            "E commerce app with Flutter N 8",
+            "Splash Screen",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 32,
-              color: AppColors.white,
+              // color: AppColors.white,
             ),
           ),
         ),

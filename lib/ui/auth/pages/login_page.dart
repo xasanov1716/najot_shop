@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
 import '../../../providers/auth_provider.dart';
+import '../../../utils/images/app_images.dart';
 import '../widgets/global_button.dart';
+import '../widgets/global_login_with_screen.dart';
 import '../widgets/global_text_fields.dart';
 
 class LoginPage extends StatelessWidget {
@@ -13,45 +14,82 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.w),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          GlobalTextField(
-              hintText: "Email",
-              keyboardType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.next,
-              textAlign: TextAlign.start,
-              controller: context.read<AuthProvider>().emailController),
-          const SizedBox(height: 24),
-          GlobalTextField(
-            hintText: "Password",
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.next,
-            textAlign: TextAlign.start,
-            controller: context.read<AuthProvider>().passwordController,
-          ),
-          const SizedBox(height: 24),
-          GlobalButton(
-              title: "Log In",
-              onTap: () {
-                context.read<AuthProvider>().logIn(context);
-              }),
-          const SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+    return Center(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(25.sp),
+          child: Column(
             children: [
-              TextButton(
-                  onPressed: () {
-                    onChanged.call();
-                    context.read<AuthProvider>().signUpButtonPressed();
-                  },
-                  child: const Text("Sign Up"))
+              const Text(
+                "Najot Shop",
+                style: TextStyle(
+                  fontFamily: "Borel-Regular.ttf",
+                  color: Colors.deepPurpleAccent,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 40),
+              GlobalTextField(
+                hintText: "Email",
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                textAlign: TextAlign.start,
+                controller: context.read<AuthProvider>().emailController,
+                title: 'Email',
+                isPassword: false,
+              ),
+              const SizedBox(height: 24),
+              GlobalTextField(
+                hintText: "Password",
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                textAlign: TextAlign.start,
+                controller: context.read<AuthProvider>().passwordController,
+                title: 'Password',
+                isPassword: true,
+              ),
+              const SizedBox(height: 70),
+              GetLoginWithButton(
+                  text: "Login with Google", img: AppImages.google),
+              const SizedBox(height: 20),
+              GetLoginWithButton(
+                  text: "Login with Apple", img: AppImages.apple),
+              const SizedBox(height: 20),
+              GlobalButton(
+                text: "Log In",
+                onTap: () {
+                  context.read<AuthProvider>().logIn(context);
+                },
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don’t have an account?",
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                        color: Colors.deepPurpleAccent,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      onChanged.call();
+                      context.read<AuthProvider>().signUpButtonPressed();
+                    },
+                    child: Text(
+                      "Sing Up",
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelLarge!
+                          .copyWith(fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ],
+              ),
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

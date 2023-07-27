@@ -23,6 +23,7 @@ dependencies:
   flutter_svg: ^2.0.7
   zoom_tap_animation: ^1.1.0
   provider: ^6.0.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -37,23 +38,6 @@ flutter:
     - assets/fonts/
 
   fonts:
-    - family: DMSans
+    - family: Borel
       fonts:
-        - asset: assets/fonts/DMSans-Regular.ttf
-        - asset: assets/fonts/DMSans-BlackItalic.ttf
-        - asset: assets/fonts/DMSans-Black.ttf
-        - asset: assets/fonts/DMSans-Bold.ttf
-        - asset: assets/fonts/DMSans-BoldItalic.ttf
-        - asset: assets/fonts/DMSans-ExtraBold.ttf
-        - asset: assets/fonts/DMSans-ExtraBoldItalic.ttf
-        - asset: assets/fonts/DMSans-ExtraLight.ttf
-        - asset: assets/fonts/DMSans-ExtraLightItalic.ttf
-        - asset: assets/fonts/DMSans-Italic.ttf
-        - asset: assets/fonts/DMSans-Light.ttf
-        - asset: assets/fonts/DMSans-LightItalic.ttf
-        - asset: assets/fonts/DMSans-Medium.ttf
-        - asset: assets/fonts/DMSans-MediumItalic.ttf
-        - asset: assets/fonts/DMSans-SemiBold.ttf
-        - asset: assets/fonts/DMSans-SemiBold.ttf
-        - asset: assets/fonts/DMSans-Thin.ttf
-        - asset: assets/fonts/DMSans-ThinItalic.ttf
+        - asset: assets/fonts/Borel-Regular.ttf

@@ -18,34 +18,46 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(isLoginPage ? "Login" : "Sign Up"),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          isLoginPage ? "Login" : "Sign Up",
+          style: const TextStyle(
+            color: Colors.deepPurpleAccent,
+            fontSize: 25,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-        body: Stack(
-          children: [
-            isLoginPage
-                ? LoginPage(
-                    onChanged: () {
-                      setState(() {
-                        isLoginPage = false;
-                      });
-                    },
-                  )
-                : SignUpScreen(
-                    onChanged: () {
-                      setState(() {
-                        isLoginPage = true;
-                      });
-                    },
-                  ),
-            Visibility(
-              visible: context.watch<AuthProvider>().isLoading,
-              child: const Align(
-                alignment: Alignment.center,
-                child: CircularProgressIndicator(),
-              ),
-            )
-          ],
-        ));
+      ),
+      body: Stack(
+        children: [
+          isLoginPage
+              ? LoginPage(
+                  onChanged: () {
+                    setState(() {
+                      isLoginPage = false;
+                    });
+                  },
+                )
+              : SignUpScreen(
+                  onChanged: () {
+                    setState(() {
+                      isLoginPage = true;
+                    });
+                  },
+                ),
+          Visibility(
+            visible: context.watch<AuthProvider>().isLoading,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: LinearProgressIndicator(color: Colors.deepPurpleAccent,backgroundColor: Colors.deepPurple.withOpacity(0.3),),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

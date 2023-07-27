@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "50247488432",
-    "project_id": "najot-shop",
-    "storage_bucket": "najot-shop.appspot.com"
+    "project_number": "149798986059",
+    "project_id": "najot-shop-c5e52",
+    "storage_bucket": "najot-shop-c5e52.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:50247488432:android:a42ad5d42f113a400a7c75",
+        "mobilesdk_app_id": "1:149798986059:android:9bd73ff54fb13fca1fc8ce",
         "android_client_info": {
           "package_name": "uz.najot_shop"
         }
       },
       "oauth_client": [
         {
-          "client_id": "50247488432-vqk9tlgt2sik9l8gabaauq8nfaf36pee.apps.googleusercontent.com",
+          "client_id": "149798986059-5fftj7idf41vptffa1ua8g5e8ldivruh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBZI-dxREO9zV9jNZ0-3K8zK8pMOpb08Rs"
+          "current_key": "AIzaSyDGWlYwRwF_xvjy3ObdAcXt3ZgnQVdjLUg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "50247488432-vqk9tlgt2sik9l8gabaauq8nfaf36pee.apps.googleusercontent.com",
+              "client_id": "149798986059-5fftj7idf41vptffa1ua8g5e8ldivruh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
