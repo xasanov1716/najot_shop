@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "50247488432",
+    "project_id": "najot-shop",
+    "storage_bucket": "najot-shop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50247488432:android:a42ad5d42f113a400a7c75",
+        "android_client_info": {
+          "package_name": "uz.najot_shop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50247488432-vqk9tlgt2sik9l8gabaauq8nfaf36pee.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZI-dxREO9zV9jNZ0-3K8zK8pMOpb08Rs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50247488432-vqk9tlgt2sik9l8gabaauq8nfaf36pee.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
