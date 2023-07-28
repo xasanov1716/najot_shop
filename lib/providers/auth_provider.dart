@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:najot_shop/ui/tab/home/home_screen.dart';
 import 'package:najot_shop/ui/tab/profile/profile_screen.dart';
 
@@ -10,15 +11,12 @@ class AuthProvider with ChangeNotifier {
 
   bool isLoading = false;
 
-  List<Widget> screens = [
-    const HomeScreen(),
-    const ProfileScreen()
-  ];
+  List<Widget> screens = [const HomeScreen(), const ProfileScreen()];
 
-  int activeIndex =0;
+  int activeIndex = 0;
 
-  void checkIndex(int index){
-    activeIndex=index;
+  void checkIndex(int index) {
+    activeIndex = index;
     notifyListeners();
   }
 
@@ -34,7 +32,6 @@ class AuthProvider with ChangeNotifier {
   }
 
   Stream<User?> listenAuthState() => FirebaseAuth.instance.authStateChanges();
-  Stream<User?> listenAuthWithGoogle() => FirebaseAuth.instance.authStateChanges();
 
   Future<void> signUpUser(BuildContext context) async {
     String email = emailController.text;
@@ -42,7 +39,6 @@ class AuthProvider with ChangeNotifier {
     try {
       isLoading = true;
       notifyListeners();
-      // final credential =
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -67,7 +63,6 @@ class AuthProvider with ChangeNotifier {
     try {
       isLoading = true;
       notifyListeners();
-      // final credential =
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
@@ -86,11 +81,10 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<void> logOut(BuildContext context)async{
+  Future<void> logOut(BuildContext context) async {
     try {
       isLoading = true;
       notifyListeners();
-      // final credential =
       await FirebaseAuth.instance.signOut();
       isLoading = false;
       loginButtonPressed();
@@ -105,6 +99,33 @@ class AuthProvider with ChangeNotifier {
     } catch (error) {
       manageMessage(context, error.toString());
     }
+  }
+
+  Future<void> singInWithGoogle(BuildContext context) async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    try {
+      isLoading = true;
+      notifyListeners();
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      isLoading = false;
+      notifyListeners();
+    } on FirebaseAuthException catch (e) {
+      manageMessage(context, e.code);
+      if (e.code == 'weak-password') {
+        debugPrint('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        debugPrint('The account already exists for that email.');
+      }
+    } catch (error) {
+      manageMessage(context, error.toString());
+    }
+    await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   manageMessage(BuildContext context, String error) {
