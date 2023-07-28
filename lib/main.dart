@@ -2,8 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:najot_shop/providers/auth_provider.dart';
+import 'package:najot_shop/providers/profile_provider.dart';
 import 'package:najot_shop/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
+
+import 'data/firebase/profile_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +16,10 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(
           create: (context) => AuthProvider(),
+          lazy: true,
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProfileProvider(profileService: ProfileService(),),
           lazy: true,
         ),
       ],
