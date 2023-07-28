@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:najot_shop/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class GetLoginWithButton extends StatelessWidget {
@@ -12,7 +14,9 @@ class GetLoginWithButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ZoomTapAnimation(
-      onTap: () {},
+      onTap: () {
+        context.read<AuthProvider>().singInWithGoogle(context);
+      },
       child: Container(
         width: 327.w,
         height: 48.h,
