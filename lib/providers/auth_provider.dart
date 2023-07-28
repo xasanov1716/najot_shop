@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:najot_shop/ui/tab/home/home_screen.dart';
 import 'package:najot_shop/ui/tab/profile/profile_screen.dart';
+
+import '../ui/tab/product/product_screen.dart';
 
 class AuthProvider with ChangeNotifier {
   final TextEditingController passwordController = TextEditingController();
@@ -11,14 +12,7 @@ class AuthProvider with ChangeNotifier {
 
   bool isLoading = false;
 
-  List<Widget> screens = [const HomeScreen(), const ProfileScreen()];
 
-  int activeIndex = 0;
-
-  void checkIndex(int index) {
-    activeIndex = index;
-    notifyListeners();
-  }
 
   loginButtonPressed() {
     passwordController.clear();
