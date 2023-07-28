@@ -129,7 +129,10 @@ class AuthProvider with ChangeNotifier {
   }
 
   manageMessage(BuildContext context, String error) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(error),
+      backgroundColor: Colors.red,
+    ));
     isLoading = false;
     notifyListeners();
   }
