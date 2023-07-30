@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:najot_shop/ui/tab/profile/profile_screen.dart';
-
-import '../ui/tab/product/product_screen.dart';
 
 class AuthProvider with ChangeNotifier {
   final TextEditingController passwordController = TextEditingController();
@@ -11,8 +8,6 @@ class AuthProvider with ChangeNotifier {
   final TextEditingController userNameController = TextEditingController();
 
   bool isLoading = false;
-
-
 
   loginButtonPressed() {
     passwordController.clear();
@@ -123,10 +118,15 @@ class AuthProvider with ChangeNotifier {
   }
 
   manageMessage(BuildContext context, String error) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(error),
-      backgroundColor: Colors.red,
-    ));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Center(child: Text(error)),
+        backgroundColor: Colors.red,
+        // padding: EdgeInsets.all(10),
+        duration: const Duration(seconds: 7),
+        action: SnackBarAction(label: "Ok", onPressed: (){}),
+      ),
+    );
     isLoading = false;
     notifyListeners();
   }

@@ -27,7 +27,14 @@ class ProfileProvider with ChangeNotifier {
   }
 
   showMessage(BuildContext context, String error) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(error),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 7),
+        action: SnackBarAction(label: "Ok", onPressed: (){}),
+      ),
+    );
     isLoading = false;
     notifyListeners();
   }
@@ -59,11 +66,10 @@ class ProfileProvider with ChangeNotifier {
 
   Future<void> updateEmail(BuildContext context) async {
     String email = emailController.text;
-
     if (email.isNotEmpty) {
       notify(true);
       UniversalData universalData =
-      await profileService.updateUserEmail(email: email);
+          await profileService.updateUserEmail(email: email);
       notify(false);
       if (universalData.error.isEmpty) {
         if (context.mounted) {

@@ -20,7 +20,7 @@ class SignUpScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
             GlobalTextField(
               hintText: "Username",
               keyboardType: TextInputType.emailAddress,
@@ -28,10 +28,10 @@ class SignUpScreen extends StatelessWidget {
               textAlign: TextAlign.start,
               controller: context.read<AuthProvider>().userNameController,
               title: 'Username',
-              isPassword: false,
+              obscureText: false,
             ),
             const SizedBox(
-              height: 24,
+              height: 20,
             ),
             GlobalTextField(
               hintText: "Email",
@@ -40,9 +40,9 @@ class SignUpScreen extends StatelessWidget {
               textAlign: TextAlign.start,
               controller: context.read<AuthProvider>().emailController,
               title: 'Email',
-              isPassword: false,
+              obscureText: false,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
             GlobalTextField(
               hintText: "Password",
               keyboardType: TextInputType.emailAddress,
@@ -50,21 +50,18 @@ class SignUpScreen extends StatelessWidget {
               textAlign: TextAlign.start,
               controller: context.read<AuthProvider>().passwordController,
               title: 'Password',
-              isPassword: true,
+              obscureText: true,
             ),
-            const SizedBox(height: 70),
-            GetLoginWithButton(
-                text: "Login with Google", img: AppImages.google),
             const SizedBox(height: 20),
             GetLoginWithButton(
-                text: "Login with Apple", img: AppImages.apple),
+                text: "Login with Google", img: AppImages.google),
             const SizedBox(height: 20),
             GlobalButton(
                 text: "Sign up",
                 onTap: () {
                   context.read<AuthProvider>().signUpUser(context);
                 }),
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
