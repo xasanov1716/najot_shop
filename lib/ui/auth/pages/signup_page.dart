@@ -20,7 +20,9 @@ class SignUpScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
+            Image.asset("assets/images/singup_logo.png", width: 250),
+            const SizedBox(height: 30),
             GlobalTextField(
               hintText: "Username",
               keyboardType: TextInputType.emailAddress,

@@ -37,11 +37,7 @@ class _GlobalButtonState extends State<GlobalButton> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4.r),
           border: Border.all(width: 1.w, color: Colors.deepPurple),
-          color: widget.username
-              ? widget.password
-                  ? Colors.deepPurpleAccent
-                  : Colors.deepPurpleAccent.withOpacity(0.5)
-              : Colors.deepPurple,
+          color: Colors.deepPurple,
         ),
         child: Center(
           child: Text(

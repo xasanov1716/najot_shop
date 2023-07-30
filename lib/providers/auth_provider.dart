@@ -120,9 +120,8 @@ class AuthProvider with ChangeNotifier {
   manageMessage(BuildContext context, String error) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Center(child: Text(error)),
-        backgroundColor: Colors.red,
-        // padding: EdgeInsets.all(10),
+        content: Text(error),
+        backgroundColor: Colors.deepPurpleAccent,
         duration: const Duration(seconds: 7),
         action: SnackBarAction(label: "Ok", onPressed: (){}),
       ),

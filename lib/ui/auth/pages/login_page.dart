@@ -20,16 +20,8 @@ class LoginPage extends StatelessWidget {
           padding: EdgeInsets.all(25.sp),
           child: Column(
             children: [
-              const Text(
-                "Najot Shop",
-                style: TextStyle(
-                  fontFamily: "Borel-Regular.ttf",
-                  color: Colors.deepPurpleAccent,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-              const SizedBox(height: 40),
+              Image.asset("assets/images/login_logo.png", width: 250),
+              const SizedBox(height: 20),
               GlobalTextField(
                 hintText: "Email",
                 keyboardType: TextInputType.emailAddress,
