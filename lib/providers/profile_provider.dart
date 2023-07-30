@@ -30,7 +30,7 @@ class ProfileProvider with ChangeNotifier {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(error),
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.deepPurpleAccent,
         duration: const Duration(seconds: 7),
         action: SnackBarAction(label: "Ok", onPressed: (){}),
       ),

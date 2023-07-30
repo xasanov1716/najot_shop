@@ -19,19 +19,19 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        // backgroundColor: Colors.white,
-        centerTitle: true,
-        title: Text(
-          isLoginPage ? "Login" : "Sign Up",
-          style: const TextStyle(
-            color: Colors.deepPurpleAccent,
-            fontSize: 25,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   // backgroundColor: Colors.white,
+      //   centerTitle: true,
+      //   title: Text(
+      //     isLoginPage ? "Login" : "Sign Up",
+      //     style: const TextStyle(
+      //       color: Colors.deepPurpleAccent,
+      //       fontSize: 25,
+      //       fontWeight: FontWeight.w500,
+      //     ),
+      //   ),
+      // ),
       body: Stack(
         children: [
           isLoginPage
@@ -52,8 +52,12 @@ class _AuthScreenState extends State<AuthScreen> {
           Visibility(
             visible: context.watch<AuthProvider>().isLoading,
             child: Align(
-              alignment: Alignment.topCenter,
-              child: LinearProgressIndicator(color: Colors.deepPurpleAccent,backgroundColor: Colors.deepPurple.withOpacity(0.3),),
+              alignment: Alignment.bottomCenter,
+              child: LinearProgressIndicator(
+                color: Colors.deepPurpleAccent,
+                backgroundColor: Colors.deepPurple.withOpacity(0.3),
+                minHeight: 10,
+              ),
             ),
           )
         ],

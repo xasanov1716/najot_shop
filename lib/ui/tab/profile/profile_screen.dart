@@ -47,7 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {
+                        onPressed: ()async{
                           context.read<AuthProvider>().logOut(context);
                           Navigator.pop(context);
                         },
@@ -86,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(height: 10),
                 Center(
                   child: Text(
-                    user?.displayName ?? "Not found!",
+                    user.displayName ?? "Not found!",
                     style: const TextStyle(
                       fontSize: 24,
                       color: Colors.deepPurple,
@@ -95,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 Center(
                   child: Text(
-                    user?.email ?? "Empty",
+                    user.email ?? "Empty",
                     style: const TextStyle(
                       fontSize: 15,
                       color: Colors.grey,
@@ -104,7 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 Center(
                   child: Text(
-                    user?.phoneNumber ?? "Not found!",
+                    user.phoneNumber ?? "Not found!",
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
