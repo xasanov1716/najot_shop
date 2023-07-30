@@ -18,10 +18,10 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
           isLoginPage ? "Login" : "Sign Up",

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:najot_shop/providers/tab_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/auth_provider.dart';
-
 class TabBox extends StatefulWidget {
   const TabBox({super.key});
 
@@ -20,7 +18,7 @@ class _TabBoxState extends State<TabBox> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: provider.activeIndex,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.production_quantity_limits_outlined), label: "Product"),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: "Product"),
           BottomNavigationBarItem(icon: Icon(Icons.category), label: "Categories"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],

@@ -37,7 +37,7 @@ class LoginPage extends StatelessWidget {
                 textAlign: TextAlign.start,
                 controller: context.read<AuthProvider>().emailController,
                 title: 'Email',
-                isPassword: false,
+                obscureText: false,
               ),
               const SizedBox(height: 24),
               GlobalTextField(
@@ -47,14 +47,11 @@ class LoginPage extends StatelessWidget {
                 textAlign: TextAlign.start,
                 controller: context.read<AuthProvider>().passwordController,
                 title: 'Password',
-                isPassword: true,
+                obscureText: true,
               ),
               const SizedBox(height: 70),
               GetLoginWithButton(
                   text: "Login with Google", img: AppImages.google),
-              const SizedBox(height: 20),
-              GetLoginWithButton(
-                  text: "Login with Apple", img: AppImages.apple),
               const SizedBox(height: 20),
               GlobalButton(
                 text: "Log In",
