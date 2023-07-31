@@ -75,6 +75,7 @@ class AuthProvider with ChangeNotifier {
       isLoading = true;
       notifyListeners();
       await FirebaseAuth.instance.signOut();
+      await GoogleSignIn().signOut();
       isLoading = false;
       loginButtonPressed();
       notifyListeners();
