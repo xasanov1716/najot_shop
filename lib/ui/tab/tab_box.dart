@@ -14,12 +14,14 @@ class _TabBoxState extends State<TabBox> {
   Widget build(BuildContext context) {
     var provider = Provider.of<TabProvider>(context,listen: true);
     return Scaffold(
-      body: provider.screens[provider.activeIndex] ,
+      body:IndexedStack(index: provider.activeIndex,children:provider.screens,) ,
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: provider.activeIndex,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: "Product"),
           BottomNavigationBarItem(icon: Icon(Icons.category), label: "Categories"),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favorite"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
         onTap: (index){

@@ -21,9 +21,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
   bool isLoading = false;
 
   _getCategoryData() async {
-    setState(() {
-      isLoading = true;
-    });
+   if(mounted){ setState(() {
+     isLoading = true;
+   });}
     List<UniversalData> result =
         await Future.wait([ApiProvider.allCategories()]);
 
@@ -32,9 +32,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
     } else {
       isError = result[0].error;
     }
-    setState(() {
-      isLoading = false;
-    });
+    if(mounted){
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
