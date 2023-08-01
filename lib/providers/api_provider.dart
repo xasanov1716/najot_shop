@@ -35,7 +35,7 @@ class ApiProvider {
 
       if (response.statusCode == HttpStatus.ok) {
         List<dynamic> json = jsonDecode(response.body);
-        List<ProductsDataModel> category = json.map((e) => ProductsDataModel.fromJson(e)).toList();
+        List<ProductModel> category = json.map((e) => ProductModel.fromJson(e)).toList();
 
         return UniversalData(
             data: category);
@@ -57,7 +57,7 @@ class ApiProvider {
       if (response.statusCode == HttpStatus.ok) {
         return UniversalData(statusCode: 200,
           data: (jsonDecode(response.body)["data"] as List?)
-              ?.map((e) => ProductsDataModel.fromJson(e)).toList() ?? [],
+              ?.map((e) => ProductModel.fromJson(e)).toList() ?? [],
         );
       }
       return checkErrors(response);

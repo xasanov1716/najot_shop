@@ -2,25 +2,25 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:najot_shop/ui/tab/widget/product_shimmer.dart';
 import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/models/category_model.dart';
 import '../../../providers/category_provider.dart';
+import '../../tab_client/widget/product_shimmer.dart';
 import 'add_category.dart';
 
-class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({super.key});
+class CategoryScreenAdmin extends StatefulWidget {
+  const CategoryScreenAdmin({super.key});
 
   @override
-  State<CategoryScreen> createState() => _CategoryScreenState();
+  State<CategoryScreenAdmin> createState() => _CategoryScreenAdminState();
 }
 
 List<CategoryModel>? categoryModels;
 String isError = "";
 bool isLoading = false;
 
-class _CategoryScreenState extends State<CategoryScreen> {
+class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -19,7 +19,7 @@ class CategoryProductScreen extends StatefulWidget {
 }
 
 class _CategoryProductScreenState extends State<CategoryProductScreen> {
-  List<ProductsDataModel>? productModels;
+  List<ProductModel>? productModels;
   String isError = "";
   bool isLoading = false;
 
@@ -31,7 +31,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
         await Future.wait([ApiProvider.productById(widget.id)]);
 
     if (result[0].error.isEmpty) {
-      productModels = result.first.data as List<ProductsDataModel>;
+      productModels = result.first.data as List<ProductModel>;
     } else {
       isError = result[0].error;
     }
@@ -99,7 +99,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                                               BorderRadius.circular(16),
                                           child: CachedNetworkImage(
                                             imageUrl:
-                                                productModels![index].imageUrl,
+                                                productModels![index].productImages[index],
                                             placeholder: (context, url) =>
                                                 const LoadData(),
                                             width: double.infinity,
@@ -143,7 +143,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                                     ),
                                     const Spacer(),
                                     Text(
-                                      productModels![index].name,
+                                      productModels![index].productName,
                                       style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w700,

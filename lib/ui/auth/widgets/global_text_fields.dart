@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class GlobalTextField extends StatefulWidget {
-  const GlobalTextField({
+   GlobalTextField({
     Key? key,
     required this.hintText,
     required this.keyboardType,
@@ -9,11 +9,12 @@ class GlobalTextField extends StatefulWidget {
     required this.textAlign,
     this.obscureText = false,
     required this.controller,
-    required this.title,
+    required this.title,  this.maxLine = 1,
   }) : super(key: key);
 
   final String title;
   final String hintText;
+  int maxLine;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
   final TextAlign textAlign;
@@ -41,6 +42,7 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
         ),
         const SizedBox(height: 5),
         TextField(
+          maxLines: widget.maxLine,
           controller: widget.controller,
           obscureText: widget.hintText=="Password"?isTap:widget.obscureText,
           cursorColor: Colors.deepPurpleAccent,

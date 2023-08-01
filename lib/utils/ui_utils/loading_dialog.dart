@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:najot_shop/ui/tab/widget/product_shimmer.dart';
+
+import '../../ui/tab_admin/widget/product_shimmer.dart';
 
 
 void showLoading({required BuildContext context}) {

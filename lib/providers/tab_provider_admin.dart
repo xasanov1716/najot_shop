@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:najot_shop/ui/tab_client/categories/category_screen.dart';
-import 'package:najot_shop/ui/tab_client/profile/profile_screen.dart';
+import 'package:najot_shop/ui/tab_admin/product/products_screen.dart';
 
 import '../ui/tab_admin/categories/category_screen.dart';
 import '../ui/tab_admin/favorites/favorites_screen.dart';
 import '../ui/tab_admin/profile/profile_screen.dart';
 import '../ui/tab_client/product/products_screen.dart';
 
-class TabProvider with ChangeNotifier {
+class TabAdminProvider with ChangeNotifier {
   List<Widget> screens = [
-    const ProductsScreen(),
-    const CategoryScreen(),
+    const ProductScreenAdmin(),
+    const CategoryScreenAdmin(),
     const FavoritesScreen(),
-    const ProfileScreen(),
+    const ProfileScreenAdmin(),
   ];
 
   int activeIndex = 0;

@@ -1,44 +1,94 @@
-class ProductsDataModel {
-  int id;
-  int categoryId;
-  String name;
+class ProductModel {
+  int count;
   int price;
-  String imageUrl;
+  List<dynamic> productImages;
+  String categoryId;
+  String productId;
+  String productName;
   bool isFavorite;
+  String description;
+  String createdAt;
+  String currency;
 
-  ProductsDataModel(
-      {required this.id,
-      required this.categoryId,
-      required this.name,
-      required this.price,
-      required this.imageUrl,
-      this.isFavorite = false,});
+  ProductModel({
+    required this.count,
+    this.isFavorite = false,
+    required this.price,
+    required this.productImages,
+    required this.categoryId,
+    required this.productId,
+    required this.productName,
+    required this.description,
+    required this.createdAt,
+    required this.currency,
+  });
 
-  factory ProductsDataModel.fromJson(Map<String, dynamic> json) =>
-      ProductsDataModel(
-        id: json["id"],
-        categoryId: json["category_id"],
-        name: json["name"],
-        price: json["price"],
-        imageUrl: json["image_url"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "category_id": categoryId,
-        "name": name,
-        "price": price,
-        "image_url": imageUrl,
-      };
-
-  copyWith({bool? isFavorite}) {
-    return ProductsDataModel(
-      id: id,
-      categoryId: categoryId,
-      name: name,
-      price: price,
-      imageUrl: imageUrl,
+  ProductModel copyWith({
+    int? count,
+    int? price,
+    List<dynamic>? productImages,
+    String? categoryId,
+    String? productId,
+    String? productName,
+    bool? isFavorite,
+    String? description,
+    String? createdAt,
+    String? currency,
+  }) {
+    return ProductModel(
+      count: count ?? this.count,
+      price: price ?? this.price,
+      productImages: productImages ?? this.productImages,
+      categoryId: categoryId ?? this.categoryId,
+      productId: productId ?? this.productId,
+      productName: productName ?? this.productName,
+      description: description ?? this.description,
       isFavorite: isFavorite ?? this.isFavorite,
+      createdAt: createdAt ?? this.createdAt,
+      currency: currency ?? this.currency,
     );
+  }
+
+  factory ProductModel.fromJson(Map<String, dynamic> jsonData) {
+    return ProductModel(
+      count: jsonData['count'] as int? ?? 0,
+      price: jsonData['price'] as int? ?? 0,
+      productImages: (jsonData['productImages'] as List<dynamic>? ?? []),
+      categoryId: jsonData['categoryId'] as String? ?? '',
+      productId: jsonData['productId'] as String? ?? '',
+      productName: jsonData['productName'] as String? ?? '',
+      description: jsonData['description'] as String? ?? '',
+      createdAt: jsonData['createdAt'] as String? ?? '',
+      currency: jsonData['currency'] as String? ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'count': count,
+      'price': price,
+      'productImages': productImages,
+      'categoryId': categoryId,
+      'productId': productId,
+      'productName': productName,
+      'description': description,
+      'createdAt': createdAt,
+      'currency': currency,
+    };
+  }
+
+  @override
+  String toString() {
+    return '''
+      count: $count,
+      price: $price,
+      productImages: $productImages,
+      categoryId: $categoryId,
+      productId: $productId,
+      productName: $productName,
+      description: $description,
+      createdAt: $createdAt,
+      currency: $currency
+      ''';
   }
 }

@@ -5,11 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:najot_shop/ui/auth/widgets/global_button.dart';
 import 'package:najot_shop/ui/auth/widgets/global_text_fields.dart';
-import 'package:najot_shop/ui/tab/categories/category_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/models/category_model.dart';
 import '../../../providers/category_provider.dart';
+import '../../tab_admin/categories/category_screen.dart';
 
 class UpdatePage extends StatefulWidget {
   const UpdatePage({Key? key}) : super(key: key);
@@ -143,7 +143,7 @@ class _UpdatePageState extends State<UpdatePage> {
                     ),
                   );
                   Navigator.pushReplacement(context,
-                      CupertinoPageRoute(builder: (context) => const CategoryScreen()));
+                      CupertinoPageRoute(builder: (context) => const CategoryScreenAdmin()));
                 }
                 context.read<CategoryProvider>().nameController.clear();
                 context.read<CategoryProvider>().descriptionController.clear();

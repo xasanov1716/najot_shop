@@ -93,4 +93,10 @@ class CategoryProvider with ChangeNotifier {
     );
     notifyListeners();
   }
+
+
+  clearTexts() {
+    descriptionController.clear();
+    nameController.clear();
+  }
 }
