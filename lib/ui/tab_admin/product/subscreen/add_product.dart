@@ -9,10 +9,10 @@ import '../../../../data/models/category_model.dart';
 import '../../../../data/models/products_data_model.dart';
 import '../../../../providers/category_provider.dart';
 import '../../../../providers/product_provider.dart';
-import '../../../../utils/app_colors.dart';
 import '../../../auth/widgets/global_button.dart';
 import '../../../auth/widgets/global_text_fields.dart';
 
+// ignore: must_be_immutable
 class ProductAddScreen extends StatefulWidget {
   ProductAddScreen({super.key, this.productModel});
 
@@ -46,7 +46,6 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back,
-              color: Colors.white,
             ),
             onPressed: () {
               Provider.of<CategoryProvider>(context, listen: false)
@@ -62,25 +61,24 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                 padding: const EdgeInsets.all(16),
                 children: [
                   GlobalTextField(
-                      hintText: "Product Name",
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      textAlign: TextAlign.start,
-                      controller: context
-                          .read<ProductsProvider>()
-                          .productNameController, title: '',),
+                    hintText: "Product Name",
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                    textAlign: TextAlign.start,
+                    controller:
+                        context.read<ProductsProvider>().productNameController,
+                    title: '',
+                  ),
                   const SizedBox(height: 24),
-                  SizedBox(
-                    height: 200,
-                    child: GlobalTextField(
-                        maxLine: 100,
-                        hintText: "Description",
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.next,
-                        textAlign: TextAlign.start,
-                        controller: context
-                            .read<ProductsProvider>()
-                            .productDescController, title: '',),
+                  GlobalTextField(
+                    maxLine: 10,
+                    hintText: "Description",
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    textAlign: TextAlign.start,
+                    controller:
+                        context.read<ProductsProvider>().productDescController,
+                    title: '',
                   ),
                   const SizedBox(height: 24),
                   GlobalTextField(
@@ -89,7 +87,8 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                     textInputAction: TextInputAction.next,
                     textAlign: TextAlign.start,
                     controller:
-                    context.read<ProductsProvider>().productCountController, title: '',
+                        context.read<ProductsProvider>().productCountController,
+                    title: '',
                   ),
                   const SizedBox(height: 24),
                   GlobalTextField(
@@ -98,14 +97,12 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                     textInputAction: TextInputAction.next,
                     textAlign: TextAlign.start,
                     controller:
-                    context.read<ProductsProvider>().productPriceController, title: '',
+                        context.read<ProductsProvider>().productPriceController,
+                    title: '',
                   ),
                   const SizedBox(height: 24),
                   DropdownButton(
-                    // Initial Value
                     value: selectedCurrency,
-
-                    // Down Arrow Icon
                     icon: const Icon(Icons.keyboard_arrow_down),
 
                     // Array list of items
@@ -115,8 +112,6 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                         child: Text(items),
                       );
                     }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
                     onChanged: (String? newValue) {
                       setState(() {
                         selectedCurrency = newValue!;
@@ -131,50 +126,51 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                       if (snapshot.hasData) {
                         return snapshot.data!.isNotEmpty
                             ? SizedBox(
-                          height: 100,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: List.generate(
-                              snapshot.data!.length,
-                                  (index) {
-                                CategoryModel categoryModel =
-                                snapshot.data![index];
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedCategoryId =
-                                          categoryModel.categoryId;
-                                    });
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius.circular(16),
-                                      color: selectedCategoryId ==
-                                          categoryModel.categoryId
-                                          ? Colors.green
-                                          : Colors.white,
-                                    ),
-                                    height: 100,
-                                    margin: const EdgeInsets.all(16),
-                                    padding: const EdgeInsets.all(16),
-                                    child: Center(
-                                      child: Text(
-                                        categoryModel.categoryName,
-                                        style: TextStyle(
-                                          color: selectedCategoryId ==
-                                              categoryModel.categoryId
-                                              ? Colors.white
-                                              : Colors.black,
+                                height: 100,
+                                child: ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  children: List.generate(
+                                    snapshot.data!.length,
+                                    (index) {
+                                      CategoryModel categoryModel =
+                                          snapshot.data![index];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            selectedCategoryId =
+                                                categoryModel.categoryId;
+                                          });
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            color: selectedCategoryId ==
+                                                    categoryModel.categoryId
+                                                ? Colors.deepPurpleAccent
+                                                : Colors.deepPurple,
+                                          ),
+                                          height: 100,
+                                          margin: const EdgeInsets.all(16),
+                                          padding: const EdgeInsets.all(16),
+                                          child: Center(
+                                            child: Text(
+                                              categoryModel.categoryName,
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: selectedCategoryId ==
+                                                        categoryModel.categoryId
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
+                                      );
+                                    },
                                   ),
-                                );
-                              },
-                            ),
-                          ),
-                        )
+                                ),
+                              )
                             : const Center(child: Text("Empty!"));
                       }
                       if (snapshot.hasError) {
@@ -197,11 +193,11 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                           backgroundColor: Theme.of(context).indicatorColor),
                       child: imagePath == defaultConstatnsImages
                           ? Text(
-                        imagePath,
-                        style: const TextStyle(color: Colors.black),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      )
+                              imagePath,
+                              style: const TextStyle(color: Colors.black),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            )
                           : Image.file(File(imagePath)),
                     ),
                   ),
@@ -209,6 +205,7 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                 ],
               ),
             ),
+            const SizedBox(height: 10),
             GlobalButton(
                 text: widget.productModel == null
                     ? "Add product"
@@ -217,33 +214,34 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                   if (imagePath != defaultConstatnsImages &&
                       selectedCategoryId.isNotEmpty) {
                     context.read<ProductsProvider>().addProduct(
-                      context: context,
-                      imageUrls: [imagePath],
-                      categoryId: selectedCategoryId,
-                      productCurrency: selectedCurrency,
-                    );
+                          context: context,
+                          imageUrls: [imagePath],
+                          categoryId: selectedCategoryId,
+                          productCurrency: selectedCurrency,
+                        );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        duration: Duration(milliseconds: 500),
-                        backgroundColor: Colors.red,
-                        margin: EdgeInsets.symmetric(
+                      SnackBar(
+                        duration: const Duration(milliseconds: 500),
+                        backgroundColor: Colors.deepPurple.withOpacity(0.4),
+                        margin: const EdgeInsets.symmetric(
                           vertical: 100,
                           horizontal: 20,
                         ),
                         behavior: SnackBarBehavior.floating,
-                        content: Text(
-                          "Ma'lumotlar to'liq emas!!!",
+                        content: const Text(
+                          "Error !!!",
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
-                            fontSize: 22,
+                            fontSize: 12,
                           ),
                         ),
                       ),
                     );
                   }
                 }),
+            const SizedBox(height: 10)
           ],
         ),
       ),
@@ -258,9 +256,9 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
         return Container(
           padding: const EdgeInsets.all(24),
           height: 200,
-          decoration: BoxDecoration(
-            color: AppColors.c_162023,
-            borderRadius: const BorderRadius.only(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
