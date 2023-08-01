@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:najot_shop/ui/tab/categories/add_page.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-
 import '../../../data/models/products_data_model.dart';
 import '../../../data/models/universal_data.dart';
 import '../../../providers/api_provider.dart';
+import '../categories/add_category.dart';
 import '../widget/product_shimmer.dart';
 
 class ProductsScreen extends StatefulWidget {
