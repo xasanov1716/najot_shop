@@ -1,185 +1,62 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:najot_shop/ui/tab_admin/product/subscreen/add_product.dart';
-import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-import '../../../data/models/products_data_model.dart';
-import '../../../data/models/universal_data.dart';
-import '../../../providers/api_provider.dart';
-import '../categories/add_category.dart';
-import '../widget/product_shimmer.dart';
 
-class ProductsScreen extends StatefulWidget {
-  const ProductsScreen({Key? key}) : super(key: key);
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:najot_shop/ui/tab_admin/product/subscreen/add_product.dart';
+import 'package:provider/provider.dart';
+
+import '../../../data/models/products_data_model.dart';
+import '../../../providers/product_provider.dart';
+
+class ProductScreenClient extends StatefulWidget {
+  const ProductScreenClient({super.key});
 
   @override
-  State<ProductsScreen> createState() => _ProductsScreenState();
+  State<ProductScreenClient> createState() => _ProductScreenClientState();
 }
 
-class _ProductsScreenState extends State<ProductsScreen> {
-  List<ProductModel>? productModels;
-
-  bool isLoading = false;
-  String isError = "";
-
-  _getProductData() async {
-    setState(() {
-      isLoading = true;
-    });
-    List<UniversalData> result = await Future.wait([ApiProvider.allProduct()]);
-
-    if (result[0].error.isEmpty) {
-      productModels = (result.first.data as List<ProductModel>)
-          .map((product) => product.copyWith(isFavorite: false))
-          .cast<ProductModel>()
-          .toList();
-    } else {
-      isError = result[0].error;
-    }
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  @override
-  void initState() {
-    _getProductData();
-    super.initState();
-  }
-
+class _ProductScreenClientState extends State<ProductScreenClient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("All Products"),
       ),
-      // body: isError.isEmpty
-      //     ? isLoading
-      //         ? const Center(
-      //             child: LoadData(),
-      //           )
-              // : Column(
-              //     children: [
-              //       Expanded(
-              //         child: GridView.builder(
-              //           itemCount: productModels!.length,
-              //           gridDelegate:
-              //               const SliverGridDelegateWithFixedCrossAxisCount(
-              //             crossAxisCount: 2,
-              //             childAspectRatio: 0.65,
-              //             crossAxisSpacing: 0,
-              //             mainAxisSpacing: 0,
-              //           ),
-              //           itemBuilder: (context, index) {
-              //             return ZoomTapAnimation(
-              //               onTap: () {},
-              //               child: Container(
-              //                 padding: const EdgeInsets.all(10),
-              //                 margin: const EdgeInsets.symmetric(
-              //                   horizontal: 8,
-              //                   vertical: 8,
-              //                 ),
-              //                 decoration: BoxDecoration(
-              //                     color: Colors.white,
-              //                     borderRadius: BorderRadius.circular(15),
-              //                     border: Border.all(
-              //                         width: 1,
-              //                         color: Colors.black.withOpacity(0.4)),
-              //                     boxShadow: [
-              //                       BoxShadow(
-              //                         color: Colors.black.withOpacity(0.2),
-              //                         blurRadius: 7,
-              //                         spreadRadius: 1,
-              //                         offset: const Offset(3, 3),
-              //                       )
-              //                     ]),
-              //                 child: Column(
-              //                   children: [
-              //                     Stack(
-              //                       children: [
-              //                         ClipRRect(
-              //                           borderRadius: BorderRadius.circular(16),
-              //                           child: CachedNetworkImage(
-              //                             imageUrl:
-              //                                 productModels![index].productImages[index],
-              //                             placeholder: (context, url) =>
-              //                                 const LoadData(),
-              //                             width: double.infinity,
-              //                             height: 120.h,
-              //                             fit: BoxFit.cover,
-              //                           ),
-              //                         ),
-              //                         Positioned(
-              //                           top: 0,
-              //                           right: 0,
-              //                           child: GestureDetector(
-              //                             onTap: () {
-              //                               setState(() {
-              //                                 productModels![index].isFavorite =
-              //                                     !productModels![index]
-              //                                         .isFavorite;
-              //                               });
-              //                             },
-              //                             child: Container(
-              //                               height: 30,
-              //                               width: 30,
-              //                               decoration: const BoxDecoration(
-              //                                 color: Colors.white,
-              //                                 shape: BoxShape.circle,
-              //                               ),
-              //                               child: Center(
-              //                                 child: Icon(
-              //                                   productModels![index].isFavorite
-              //                                       ? Icons.favorite
-              //                                       : Icons.favorite_border,
-              //                                   color: Colors.red,
-              //                                   size: 25,
-              //                                 ),
-              //                               ),
-              //                             ),
-              //                           ),
-              //                         ),
-              //                       ],
-              //                     ),
-              //                     const Spacer(),
-              //                     Text(
-              //                       productModels![index].productName,
-              //                       style: const TextStyle(
-              //                         fontSize: 18,
-              //                         fontWeight: FontWeight.w700,
-              //                       ),
-              //                       textAlign: TextAlign.center,
-              //                     ),
-              //                     Text(
-              //                       "USD ${productModels![index].price.toString()}",
-              //                       style: const TextStyle(
-              //                         fontSize: 16,
-              //                         fontWeight: FontWeight.w500,
-              //                         color: Colors.indigo,
-              //                       ),
-              //                     ),
-              //                     const Spacer(),
-              //                     ElevatedButton(
-              //                       onPressed: () {},
-              //                       child: const Center(
-              //                         child: Text(
-              //                           "Add Basket",
-              //                           style: TextStyle(fontSize: 12),
-              //                         ),
-              //                       ),
-              //                     )
-              //                   ],
-              //                 ),
-              //               ),
-              //             );
-              //           },
-              //         ),
-              //       ),
-              //     ],
-              //   )
-          // : Center(
-          //     child: Text(isError),
-          //   ),
+      body: StreamBuilder<List<ProductModel>>(
+        stream: context.read<ProductsProvider>().getProducts(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshot) {
+          if (snapshot.hasData) {
+            return snapshot.data!.isNotEmpty
+                ? ListView(
+              children: List.generate(
+                snapshot.data!.length,
+                    (index) {
+                  ProductModel productModel = snapshot.data![index];
+                  return ListTile(
+                    leading: Image.file(File(productModel.productImages[0])),
+                    onLongPress: () {
+                      context.read<ProductsProvider>().deleteProduct(
+                        context: context,
+                        productId: productModel.productId,
+                      );
+                    },
+                    title: Text(productModel.productName),
+                    subtitle: Text(productModel.description),
+                  );
+                },
+              ),
+            )
+                : const Center(child: Text("Products Empty!"));
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 }

@@ -47,9 +47,11 @@ class _ProfileScreenAdminState extends State<ProfileScreenAdmin> {
                         ),
                       ),
                       TextButton(
-                        onPressed: ()async{
+                        onPressed: () async {
                           context.read<AuthProvider>().logOut(context);
                           Navigator.pop(context);
+                          context.read<ProfileProvider>().nameController.clear();
+                          context.read<ProfileProvider>().emailController.clear();
                         },
                         style: TextButton.styleFrom(
                             backgroundColor: Colors.redAccent),
@@ -77,10 +79,16 @@ class _ProfileScreenAdminState extends State<ProfileScreenAdmin> {
                   radius: 40,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(60.0),
-                    child: CachedNetworkImage(
-                      imageUrl: user!.photoURL??"",
-                      fit: BoxFit.cover,
-                    ),
+                    child: user!.photoURL == ""
+                        ? CachedNetworkImage(
+                            imageUrl: "${user.photoURL}",
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            "assets/images/logo.png",
+                            width: 80,
+                            height: 80,
+                          ),
                   ),
                 ),
                 const SizedBox(height: 10),

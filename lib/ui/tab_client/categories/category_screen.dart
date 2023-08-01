@@ -40,66 +40,46 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         CategoryModel categoryModel = snapshot.data![index];
                         return ZoomTapAnimation(
                           onTap: () {},
-                          child: Slidable(
-                            endActionPane: ActionPane(
-                              motion: const StretchMotion(),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (context) {
-                                    context.read<CategoryProvider>().deleteCategory(
-                                        context: context,
-                                        categoryId: categoryModel.categoryId);
-                                    Navigator.pop(context);
-                                  },
-                                  borderRadius: BorderRadius.circular(15),
-                                  backgroundColor: Colors.red,
-                                  icon: Icons.delete,
-                                  spacing: 10,
-                                  label: 'Delete',
+                          child: Container(
+                            margin: EdgeInsets.all(10.sp),
+                            padding: EdgeInsets.all(5.sp),
+                            height: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16.r),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 3),
                                 ),
                               ],
                             ),
-                            child: Container(
-                              margin: EdgeInsets.all(10.sp),
-                              padding: EdgeInsets.all(5.sp),
-                              height: 100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.r),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(13),
-                                    child: categoryModel.imageUrl.isNotEmpty
-                                        ? Image(
-                                            image: FileImage(
-                                              File(categoryModel.imageUrl),
-                                            ),
-                                          )
-                                        : Image.asset("assets/images/logo.png",
-                                            width: 120.w),
-                                  ),
-                                  const Spacer(),
-                                  Text(
-                                    categoryModel.categoryName,
-                                    style: TextStyle(
-                                      fontSize: 20.sp,
-                                      fontWeight: FontWeight.w700,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(13),
+                                  child: categoryModel.imageUrl.isNotEmpty
+                                      ? Image(
+                                    image: FileImage(
+                                      File(categoryModel.imageUrl),
                                     ),
+                                  )
+                                      : Image.asset("assets/images/logo.png",
+                                      width: 120.w),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  categoryModel.categoryName,
+                                  style: TextStyle(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w700,
                                   ),
-                                  const Spacer(),
-                                ],
-                              ),
+                                ),
+                                const Spacer(),
+                              ],
                             ),
                           ),
                         );
