@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:najot_shop/ui/tab/product/widget/product_shimmer.dart';
+import 'package:najot_shop/ui/tab/categories/add_page.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 import '../../../data/models/products_data_model.dart';
 import '../../../data/models/universal_data.dart';
 import '../../../providers/api_provider.dart';
-import 'favorites_screen.dart';
+import '../widget/product_shimmer.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({Key? key}) : super(key: key);
@@ -58,13 +58,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const FavoritesScreen(),
+                  builder: (context) => const AddPage(),
                 ),
               );
             },
             icon: Icon(
-              Icons.favorite,
-              size: 25.sp,
+              Icons.add,
+              size: 30.sp,
             ),
           )
         ],

@@ -1,129 +1,273 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+// import '../../../data/models/categories_data_model.dart';
+// import '../../../data/models/universal_data.dart';
+// import '../../../providers/api_provider.dart';
+// import '../widget/product_shimmer.dart';
+// import 'category_product_screen.dart';
+//
+// class CategoryScreen extends StatefulWidget {
+//   const CategoryScreen({Key? key}) : super(key: key);
+//
+//   @override
+//   State<CategoryScreen> createState() => _CategoryScreenState();
+// }
+//
+// class _CategoryScreenState extends State<CategoryScreen> {
+//   List<CategoriesDataModel>? categoryModels;
+//   String isError = "";
+//   bool isLoading = false;
+//
+//   _getCategoryData() async {
+//    if(mounted){ setState(() {
+//      isLoading = true;
+//    });}
+//     List<UniversalData> result =
+//         await Future.wait([ApiProvider.allCategories()]);
+//
+//     if (result[0].error.isEmpty) {
+//       categoryModels = result.first.data as List<CategoriesDataModel>;
+//     } else {
+//       isError = result[0].error;
+//     }
+//     if(mounted){
+//       setState(() {
+//         isLoading = false;
+//       });
+//     }
+//   }
+//
+//   @override
+//   void initState() {
+//     _getCategoryData();
+//     super.initState();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text("Categories"),
+//       ),
+//       body: isError.isEmpty
+//           ? isLoading
+//               ? const Center(child: LoadData())
+//               : Column(
+//                   children: [
+//                     SizedBox(height: 13.h),
+//                     Expanded(
+//                       child: Padding(
+//                         padding: EdgeInsets.symmetric(horizontal: 10.w),
+//                         child: ListView.builder(
+//                           itemCount: categoryModels!.length,
+//                           itemBuilder: (context, index) {
+//                             final data = categoryModels![index];
+//                             return ZoomTapAnimation(
+//                               onTap: () {
+//                                 Navigator.push(
+//                                   context,
+//                                   MaterialPageRoute(
+//                                     builder: (context) => CategoryProductScreen(
+//                                       id: data.id,
+//                                       name: data.name,
+//                                     ),
+//                                   ),
+//                                 );
+//                               },
+//                               child: Container(
+//                                 margin: EdgeInsets.all(5.sp),
+//                                 padding: EdgeInsets.all(5.sp),
+//                                 height: 100,
+//                                 decoration: BoxDecoration(
+//                                   borderRadius: BorderRadius.circular(16.r),
+//                                   color: Colors.white,
+//                                   boxShadow: [
+//                                     BoxShadow(
+//                                       color: Colors.grey.withOpacity(0.5),
+//                                       spreadRadius: 2,
+//                                       blurRadius: 5,
+//                                       offset: const Offset(0, 3),
+//                                     ),
+//                                   ],
+//                                 ),
+//                                 child: Row(
+//                                   crossAxisAlignment: CrossAxisAlignment.center,
+//                                   children: [
+//                                     ClipRRect(
+//                                       borderRadius: BorderRadius.circular(30),
+//                                       child: CachedNetworkImage(
+//                                         imageUrl: data.imageUrl,
+//                                         width: 150,
+//                                         placeholder: (context, url) =>
+//                                             const LoadData(),
+//                                       ),
+//                                     ),
+//                                     const Spacer(),
+//                                     Text(
+//                                       data.name,
+//                                       style: TextStyle(
+//                                         fontSize: 20.sp,
+//                                         fontWeight: FontWeight.w700,
+//                                       ),
+//                                     ),
+//                                     const Spacer(),
+//                                   ],
+//                                 ),
+//                               ),
+//                             );
+//                           },
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 )
+//           : Center(child: Text(isError)),
+//     );
+//   }
+// }
+///
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:najot_shop/ui/tab/categories/add_page.dart';
+import 'package:najot_shop/ui/tab/widget/product_shimmer.dart';
+import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-import '../../../data/models/categories_data_model.dart';
-import '../../../data/models/universal_data.dart';
-import '../../../providers/api_provider.dart';
-import '../product/widget/product_shimmer.dart';
-import 'category_product_screen.dart';
+import '../../../data/models/category_model.dart';
+import '../../../providers/category_provider.dart';
 
 class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({Key? key}) : super(key: key);
+  const CategoryScreen({super.key});
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
 }
 
+List<CategoryModel>? categoryModels;
+String isError = "";
+bool isLoading = false;
+
 class _CategoryScreenState extends State<CategoryScreen> {
-  List<CategoriesDataModel>? categoryModels;
-  String isError = "";
-  bool isLoading = false;
-
-  _getCategoryData() async {
-   if(mounted){ setState(() {
-     isLoading = true;
-   });}
-    List<UniversalData> result =
-        await Future.wait([ApiProvider.allCategories()]);
-
-    if (result[0].error.isEmpty) {
-      categoryModels = result.first.data as List<CategoriesDataModel>;
-    } else {
-      isError = result[0].error;
-    }
-    if(mounted){
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    _getCategoryData();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Categories"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AddPage(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.add),
+          )
+        ],
       ),
-      body: isError.isEmpty
-          ? isLoading
-              ? const Center(child: LoadData())
-              : Column(
-                  children: [
-                    SizedBox(height: 13.h),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.w),
-                        child: ListView.builder(
-                          itemCount: categoryModels!.length,
-                          itemBuilder: (context, index) {
-                            final data = categoryModels![index];
-                            return ZoomTapAnimation(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CategoryProductScreen(
-                                      id: data.id,
-                                      name: data.name,
+      body: StreamBuilder<List<CategoryModel>>(
+        stream: context.read<CategoryProvider>().getCategories(),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<CategoryModel>> snapshot) {
+          if (snapshot.hasData) {
+            return snapshot.data!.isNotEmpty
+                ? ListView(
+                    children: List.generate(
+                      snapshot.data!.length,
+                      (index) {
+                        CategoryModel categoryModel = snapshot.data![index];
+                        return ZoomTapAnimation(
+                          onTap: () {},
+                          child: Slidable(
+                            endActionPane: ActionPane(
+                              motion: const StretchMotion(),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (context) {
+                                    context.read<CategoryProvider>().deleteCategory(
+                                        context: context,
+                                        categoryId: categoryModel.categoryId);
+                                    Navigator.pop(context);
+                                  },
+                                  borderRadius: BorderRadius.circular(15),
+                                  backgroundColor: Colors.red,
+                                  icon: Icons.delete,
+                                  spacing: 10,
+                                  label: 'Delete',
+                                ),
+                              ],
+                            ),
+                            child: Container(
+                              margin: EdgeInsets.all(10.sp),
+                              padding: EdgeInsets.all(5.sp),
+                              height: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16.r),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(13),
+                                    child: categoryModel.imageUrl.isNotEmpty
+                                        ? Image(
+                                            image: FileImage(
+                                              File(categoryModel.imageUrl),
+                                            ),
+                                          )
+                                        : Image.asset("assets/images/logo.png",
+                                            width: 120.w),
+                                  ),
+                                  const Spacer(),
+                                  Text(
+                                    categoryModel.categoryName,
+                                    style: TextStyle(
+                                      fontSize: 20.sp,
+                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
-                                );
-                              },
-                              child: Container(
-                                margin: EdgeInsets.all(5.sp),
-                                padding: EdgeInsets.all(5.sp),
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16.r),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2,
-                                      blurRadius: 5,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(30),
-                                      child: CachedNetworkImage(
-                                        imageUrl: data.imageUrl,
-                                        width: 150,
-                                        placeholder: (context, url) =>
-                                            const LoadData(),
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    Text(
-                                      data.name,
-                                      style: TextStyle(
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                  ],
-                                ),
+                                  const Spacer(),
+                                ],
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                : Center(
+                    child: Text(
+                      "Empty!",
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.2),
+                        fontSize: 24,
                       ),
                     ),
-                  ],
-                )
-          : Center(child: Text(isError)),
+                  );
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          }
+          return const Center(child: LoadData());
+        },
+      ),
     );
   }
 }

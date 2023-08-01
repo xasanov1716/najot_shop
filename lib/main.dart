@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:najot_shop/data/firebase/category_service.dart';
 import 'package:najot_shop/data/firebase/profile_service.dart';
 import 'package:najot_shop/providers/auth_provider.dart';
+import 'package:najot_shop/providers/category_provider.dart';
 import 'package:najot_shop/providers/profile_provider.dart';
 import 'package:najot_shop/providers/tab_provider.dart';
 import 'package:najot_shop/splash/splash_screen.dart';
@@ -28,8 +30,12 @@ Future<void> main() async {
           create: (context) => TabProvider(),
           lazy: true,
         ),
+        ChangeNotifierProvider(
+          create: (context) => CategoryProvider(categoryService: CategoryService()),
+          lazy: true,
+        ),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }

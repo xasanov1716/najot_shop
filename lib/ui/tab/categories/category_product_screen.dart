@@ -5,7 +5,7 @@ import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/models/products_data_model.dart';
 import '../../../data/models/universal_data.dart';
 import '../../../providers/api_provider.dart';
-import '../product/widget/product_shimmer.dart';
+import '../widget/product_shimmer.dart';
 
 class CategoryProductScreen extends StatefulWidget {
   const CategoryProductScreen({Key? key, required this.id, required this.name})

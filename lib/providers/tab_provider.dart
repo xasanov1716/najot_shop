@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:najot_shop/ui/tab/product/products_screen.dart';
 import '../ui/tab/categories/category_screen.dart';
-import '../ui/tab/product/favorites_screen.dart';
+import '../ui/tab/favorites/favorites_screen.dart';
 import '../ui/tab/profile/profile_screen.dart';
 
 class TabProvider with ChangeNotifier {

@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:najot_shop/ui/auth/widgets/global_button.dart';
-import 'package:najot_shop/ui/tab/product/widget/product_shimmer.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/auth_provider.dart';
 import '../../../providers/profile_provider.dart';
 import '../../auth/widgets/global_text_fields.dart';
+import '../widget/product_shimmer.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

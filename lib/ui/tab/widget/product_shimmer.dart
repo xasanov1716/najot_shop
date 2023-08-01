@@ -7,8 +7,8 @@ class LoadData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 200.0,
-      height: 100.0,
+      width: 200,
+      height: 100,
       child: Shimmer.fromColors(
         baseColor: Colors.deepPurpleAccent,
         highlightColor: Colors.white,
@@ -17,7 +17,7 @@ class LoadData extends StatelessWidget {
             'Loading...',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 20.0,
+              fontSize: 30,
               fontWeight:
               FontWeight.bold,
             ),
