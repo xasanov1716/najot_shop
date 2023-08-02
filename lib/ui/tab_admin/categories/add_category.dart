@@ -87,6 +87,7 @@ class _AddPageState extends State<AddPage> {
                           child: const Icon(Icons.image, size: 30),
                         ),
                       ),
+                      // ClipRRect(borderRadius: BorderRadius.circular(32),child: Image(image: FileImage(File(context.read<CategoryProvider>().categoryUrl)),)),
                       ZoomTapAnimation(
                         onTap: () {
                           _getFromGallery();

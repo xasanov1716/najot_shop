@@ -12,7 +12,7 @@ import '../utils/ui_utils/loading_dialog.dart';
 class ProductsProvider with ChangeNotifier {
   ProductsProvider({required this.productsService});
 
-  String prdudctUrl = '';
+  List<String> uploadedImagesUrls = [];
   final ProductsService productsService;
 
   TextEditingController productNameController = TextEditingController();
@@ -22,12 +22,10 @@ class ProductsProvider with ChangeNotifier {
 
 
 
-
   Future<void> addProduct({
     required BuildContext context,
     required String categoryId,
     required String productCurrency,
-    required List<String> imageUrls,
   }) async {
     String name = productNameController.text;
     String productDesc = productDescController.text;
@@ -42,7 +40,7 @@ class ProductsProvider with ChangeNotifier {
       ProductModel productModel = ProductModel(
         count: int.parse(countText),
         price: int.parse(priceText),
-        productImages:[ prdudctUrl],
+        productImages: uploadedImagesUrls,
         categoryId: categoryId,
         productId: "",
         productName: name,
@@ -72,6 +70,60 @@ class ProductsProvider with ChangeNotifier {
       showMessage(context, "Maydonlar to'liq emas!!!");
     }
   }
+
+
+
+
+
+  // Future<void> addProduct({
+  //   required BuildContext context,
+  //   required String categoryId,
+  //   required String productCurrency,
+  //   required List<String> imageUrls,
+  // }) async {
+  //   String name = productNameController.text;
+  //   String productDesc = productDescController.text;
+  //   String priceText = productPriceController.text;
+  //   String countText = productCountController.text;
+  //
+  //   if (name.isNotEmpty &&
+  //       productDesc.isNotEmpty &&
+  //       priceText.isNotEmpty &&
+  //       countText.isNotEmpty) {
+  //
+  //     ProductModel productModel = ProductModel(
+  //       count: int.parse(countText),
+  //       price: int.parse(priceText),
+  //       productImages: uploadedImagesUrls,
+  //       categoryId: categoryId,
+  //       productId: "",
+  //       productName: name,
+  //       description: productDesc,
+  //       createdAt: DateTime.now().toString(),
+  //       currency: productCurrency,
+  //     );
+  //
+  //     showLoading(context: context);
+  //     UniversalData universalData =
+  //     await productsService.addProduct(productModel: productModel);
+  //     if (context.mounted) {
+  //       hideLoading(dialogContext: context);
+  //     }
+  //     if (universalData.error.isEmpty) {
+  //       if (context.mounted) {
+  //         showMessage(context, universalData.data as String);
+  //         clearTexts();
+  //         Navigator.pop(context);
+  //       }
+  //     } else {
+  //       if (context.mounted) {
+  //         showMessage(context, universalData.error);
+  //       }
+  //     }
+  //   } else {
+  //     showMessage(context, "Maydonlar to'liq emas!!!");
+  //   }
+  // }
 
 
 
@@ -122,62 +174,63 @@ class ProductsProvider with ChangeNotifier {
   }
 
 
-  Future<void> updateProduct({
-    required BuildContext context,
-    required String imagePath,
-    required ProductModel productModel,
-  }) async {
-    String name = productNameController.text;
-    String categoryDesc = productPriceController.text;
+  // Future<void> updateProduct({
+  //   required BuildContext context,
+  //   required String imagePath,
+  //   required ProductModel productModel,
+  // }) async {
+  //   String name = productNameController.text;
+  //   String categoryDesc = productPriceController.text;
+  //
+  //   if (name.isNotEmpty && categoryDesc.isNotEmpty) {
+  //     showLoading(context: context);
+  //     UniversalData universalData = await productsService.updateProduct(
+  //       productModel: ProductModel(
+  //         count: 1,
+  //         price: 23,
+  //         productImages: [],
+  //         categoryId: productModel.categoryId,
+  //         createdAt: productModel.createdAt,
+  //         productName: productNameController.text,
+  //         description: productPriceController.text,
+  //         productId: productModel.productId,
+  //         currency: "SO'M",
+  //       ),
+  //     );
+  //     if (context.mounted) {
+  //       hideLoading(dialogContext: context);
+  //     }
+  //     if (universalData.error.isEmpty) {
+  //       if (context.mounted) {
+  //         showMessage(context, universalData.data as String);
+  //         clearTexts();
+  //         Navigator.pop(context);
+  //       }
+  //     } else {
+  //       if (context.mounted) {
+  //         showMessage(context, universalData.error);
+  //       }
+  //     }
+  //   }
+  // }
 
-    if (name.isNotEmpty && categoryDesc.isNotEmpty) {
-      showLoading(context: context);
-      UniversalData universalData = await productsService.updateProduct(
-        productModel: ProductModel(
-          count: 1,
-          price: 23,
-          productImages: [],
-          categoryId: productModel.categoryId,
-          createdAt: productModel.createdAt,
-          productName: productNameController.text,
-          description: productPriceController.text,
-          productId: productModel.productId,
-          currency: "SO'M",
-        ),
-      );
-      if (context.mounted) {
-        hideLoading(dialogContext: context);
-      }
-      if (universalData.error.isEmpty) {
-        if (context.mounted) {
-          showMessage(context, universalData.data as String);
-          clearTexts();
-          Navigator.pop(context);
-        }
-      } else {
-        if (context.mounted) {
-          showMessage(context, universalData.error);
-        }
+  Future<void> uploadProductImages({
+    required BuildContext context,
+    required List<XFile> images,
+  }) async {
+    showLoading(context: context);
+
+    for (var element in images) {
+      UniversalData data = await FileUploader.imageUploader(element);
+      if (data.error.isEmpty) {
+        uploadedImagesUrls.add(data.data as String);
       }
     }
-  }
 
-  Future<void> uploadProductImage(
-      BuildContext context,
-      XFile xFile,
-      ) async {
-    showLoading(context: context);
-    UniversalData data = await FileUploader.imageUploader(xFile);
+    notifyListeners();
+
     if (context.mounted) {
       hideLoading(dialogContext: context);
-    }
-    if (data.error.isEmpty) {
-      prdudctUrl = data.data ;
-      notifyListeners();
-    } else {
-      if (context.mounted) {
-        showMessage(context, data.error);
-      }
     }
   }
 
@@ -198,4 +251,40 @@ class ProductsProvider with ChangeNotifier {
   }
 
 
+  Future<void> updateProduct({
+    required BuildContext context,
+    required String categoryId,
+    required String productCurrency,
+  }) async {
+    String name = productNameController.text;
+    String productDesc = productDescController.text;
+    String priceText = productPriceController.text;
+    String countText = productCountController.text;
+
+    if (name.isNotEmpty &&
+        productDesc.isNotEmpty &&
+        priceText.isNotEmpty &&
+        countText.isNotEmpty) {
+      ProductModel productModel = ProductModel(
+        count: int.parse(countText),
+        price: int.parse(priceText),
+        productImages: uploadedImagesUrls,
+        categoryId: categoryId,
+        productId: "",
+        productName: name,
+        description: productDesc,
+        createdAt: DateTime.now().toString(),
+        currency: productCurrency,
+      );
+    }
+  }
+
+
+
+  Stream<List<ProductModel>> getProductsBbyCategory() =>
+      FirebaseFirestore.instance.collection("products").snapshots().map(
+            (event1) => event1.docs
+            .map((doc) => ProductModel.fromJson(doc.data()))
+            .toList(),
+      );
 }
