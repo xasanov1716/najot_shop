@@ -12,7 +12,7 @@ import '../utils/ui_utils/loading_dialog.dart';
 class ProductsProvider with ChangeNotifier {
   ProductsProvider({required this.productsService});
 
-  List<String> prdudctUrl = [];
+  String prdudctUrl = '';
   final ProductsService productsService;
 
   TextEditingController productNameController = TextEditingController();
@@ -42,7 +42,7 @@ class ProductsProvider with ChangeNotifier {
       ProductModel productModel = ProductModel(
         count: int.parse(countText),
         price: int.parse(priceText),
-        productImages: imageUrls,
+        productImages:[ prdudctUrl],
         categoryId: categoryId,
         productId: "",
         productName: name,
@@ -172,7 +172,7 @@ class ProductsProvider with ChangeNotifier {
       hideLoading(dialogContext: context);
     }
     if (data.error.isEmpty) {
-      prdudctUrl = data.data as List<String>;
+      prdudctUrl = data.data ;
       notifyListeners();
     } else {
       if (context.mounted) {
