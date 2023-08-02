@@ -65,89 +65,49 @@ class _AddPageState extends State<AddPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Stack(
-                    children: [
-                      ZoomTapAnimation(
-                        onTap: () {
-                          pickImage();
-                        },
-                        child: Container(
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.deepPurpleAccent.withOpacity(0.4),
-                          ),
-                          child: const Icon(Icons.image, size: 30),
-                        ),
+                  ZoomTapAnimation(
+                    onTap: () {
+                      pickImage();
+                    },
+                    child: Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.deepPurpleAccent.withOpacity(0.4),
                       ),
-                      ZoomTapAnimation(
-                        onTap: () {
-                          pickImage();
-                        },
-                        child: Container(
-                            height: 80,
-                            width: 80,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.deepPurpleAccent.withOpacity(0.4),
-                            ),
-                            child: image?.path!=null
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(50),
-                                    child: Image(
-                                      width: 80,
-                                      height: 80,
-                                      image: FileImage(
-                                        File(image!.path),
-                                      ),
-                                    ),
-                                  )
-                                : const Icon(Icons.image, size: 30)),
-                      ),
-                    ],
+                      child: const Icon(Icons.image, size: 30),
+                    ),
                   ),
-                  Stack(
-                    children: [
-                      ZoomTapAnimation(
-                        onTap: () {
-                          pickCamera();
-                        },
-                        child: Container(
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.deepPurpleAccent.withOpacity(0.4),
-                          ),
-                          child: const Icon(Icons.camera_alt, size: 30),
-                        ),
+                  Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.deepPurpleAccent.withOpacity(0.4),
                       ),
-                      ZoomTapAnimation(
-                        onTap: () {
-                          pickCamera();
-                        },
-                        child: Container(
-                            height: 80,
+                      child: image?.path!=null
+                          ? Image(
                             width: 80,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.deepPurpleAccent.withOpacity(0.4),
+                            height: 80,
+                            image: FileImage(
+                              File(image!.path),
                             ),
-                            child: image?.path!=null
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(50),
-                                    child: Image(
-                                      width: 80,
-                                      height: 80,
-                                      image: FileImage(
-                                        File(image!.path),
-                                      ),
-                                    ),
-                                  )
-                                : const Icon(Icons.camera_alt, size: 30)),
+                          )
+                          : Image.asset("assets/images/logo.img")),
+                  ZoomTapAnimation(
+                    onTap: () {
+                      pickCamera();
+                    },
+                    child: Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.deepPurpleAccent.withOpacity(0.4),
                       ),
-                    ],
+                      child: const Icon(Icons.camera_alt, size: 30),
+                    ),
                   ),
                 ],
               ),
@@ -194,10 +154,10 @@ class _AddPageState extends State<AddPage> {
                       Navigator.pop(context);
                     }
                     context.read<CategoryProvider>().nameController.clear();
-                    context
-                        .read<CategoryProvider>()
-                        .descriptionController
-                        .clear();
+                    // context
+                    //     .read<CategoryProvider>()
+                    //     .descriptionController
+                    //     .clear();
                   })
             ],
           ),

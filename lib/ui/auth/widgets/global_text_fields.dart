@@ -46,7 +46,7 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
           controller: widget.controller,
           obscureText: widget.hintText=="Password"?isTap:widget.obscureText,
           cursorColor: Colors.deepPurpleAccent,
-          keyboardType: TextInputType.name,
+          keyboardType: widget.keyboardType,
           style: Theme.of(context).textTheme.titleMedium,
           decoration: InputDecoration(
             prefixIcon: widget.hintText == "Email"

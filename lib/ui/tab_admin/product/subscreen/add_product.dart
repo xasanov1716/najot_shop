@@ -156,12 +156,9 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                                           child: Center(
                                             child: Text(
                                               categoryModel.categoryName,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 20,
-                                                color: selectedCategoryId ==
-                                                        categoryModel.categoryId
-                                                    ? Colors.white
-                                                    : Colors.black,
+                                                color: Colors.white
                                               ),
                                             ),
                                           ),

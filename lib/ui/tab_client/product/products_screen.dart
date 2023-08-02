@@ -84,9 +84,10 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Products Client"),
+        title: const Text("Products"),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           StreamBuilder<List<CategoryModel>>(
             stream: context.read<CategoryProvider>().getCategories(),
@@ -142,7 +143,7 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
                   child: Text(snapshot.error.toString()),
                 );
               }
-              return const Center(child: LoadData());
+              return const LinearProgressIndicator();
             },
           ),
           StreamBuilder<List<ProductModel>>(
@@ -154,15 +155,24 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
               if (snapshot.hasData) {
                 return snapshot.data!.isNotEmpty
                     ? Expanded(
-                        child: ListView(
-                          children: List.generate(
-                            snapshot.data!.length,
-                            (index) {
-                              ProductModel productModel = snapshot.data![index];
-                              return ProductItemView(
-                                productModel: productModel,
-                              );
-                            },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: GridView(
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.7,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                            ),
+                            children: List.generate(
+                              snapshot.data!.length,
+                              (index) {
+                                ProductModel productModel = snapshot.data![index];
+                                return ProductItemView(
+                                  productModel: productModel,
+                                );
+                              },
+                            ),
                           ),
                         ),
                       )
