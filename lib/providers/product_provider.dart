@@ -93,12 +93,25 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
-  Stream<List<ProductModel>> getProducts() =>
-      FirebaseFirestore.instance.collection("products").snapshots().map(
+  Stream<List<ProductModel>> getProducts(String categoryId) async* {
+    if (categoryId.isEmpty) {
+      yield* FirebaseFirestore.instance.collection("products").snapshots().map(
             (event1) => event1.docs
             .map((doc) => ProductModel.fromJson(doc.data()))
             .toList(),
       );
+    } else {
+      yield* FirebaseFirestore.instance
+          .collection("products")
+          .where("categoryId", isEqualTo: categoryId)
+          .snapshots()
+          .map(
+            (event1) => event1.docs
+            .map((doc) => ProductModel.fromJson(doc.data()))
+            .toList(),
+      );
+    }
+  }
 
   showMessage(BuildContext context, String error) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));

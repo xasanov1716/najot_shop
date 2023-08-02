@@ -16,6 +16,7 @@ class ProductScreenAdmin extends StatefulWidget {
 }
 
 class _ProductScreenAdminState extends State<ProductScreenAdmin> {
+  String categoryId ="";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +39,7 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
         ],
       ),
       body: StreamBuilder<List<ProductModel>>(
-        stream: context.read<ProductsProvider>().getProducts(),
+        stream: context.read<ProductsProvider>().getProducts(categoryId),
         builder:
             (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData) {
