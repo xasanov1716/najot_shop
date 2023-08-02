@@ -215,7 +215,7 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                       selectedCategoryId.isNotEmpty) {
                     context.read<ProductsProvider>().addProduct(
                           context: context,
-                          imageUrls: context.read<ProductsProvider>().prdudctUrl,
+                          imageUrls: [context.read<ProductsProvider>().prdudctUrl],
                           categoryId: selectedCategoryId,
                           productCurrency: selectedCurrency,
                         );
@@ -294,10 +294,12 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
       maxHeight: 512,
       maxWidth: 512,
     );
+
     if (xFile != null) {
-      setState(() {
-        imagePath = xFile.path;
-      });
+      print("VBNKM<");
+      await Provider.of<ProductsProvider>(context,listen: false)
+          .uploadProductImage(context, xFile);
+
     }
   }
 
@@ -308,9 +310,8 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
       maxWidth: 512,
     );
     if (xFile != null) {
-      setState(() {
-        imagePath = xFile.path;
-      });
+      await Provider.of<ProductsProvider>(context,listen: false)
+          .uploadProductImage(context, xFile);
     }
   }
 }
