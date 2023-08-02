@@ -94,10 +94,7 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(13),
                                     child: categoryModel.imageUrl.isNotEmpty
-                                        ? Image(
-                                            image: FileImage(
-                                              File(categoryModel.imageUrl),
-                                            ),
+                                        ? Image.network(categoryModel.imageUrl
                                           )
                                         : Image.asset("assets/images/logo.png",
                                             width: 120.w),
