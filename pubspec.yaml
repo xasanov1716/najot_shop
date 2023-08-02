@@ -32,6 +32,7 @@ dependencies:
   path: ^1.8.3
   image_picker:
   flutter_slidable: ^3.0.0
+  curved_navigation_bar:
 
 dev_dependencies:
   flutter_test:

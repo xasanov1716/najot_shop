@@ -1,5 +1,5 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:najot_shop/providers/tab_provider.dart';
 import 'package:najot_shop/providers/tab_provider_admin.dart';
 import 'package:provider/provider.dart';
 
@@ -16,14 +16,14 @@ class _TabBoxAdminState extends State<TabBoxAdmin> {
     var provider = Provider.of<TabAdminProvider>(context,listen: true);
     return Scaffold(
       body:IndexedStack(index: provider.activeIndex,children:provider.screens,) ,
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: provider.activeIndex,
+      bottomNavigationBar: CurvedNavigationBar(
+        index: provider.activeIndex,
+        color: Colors.deepPurple,
+        backgroundColor: Colors.white,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: "Product"),
-          BottomNavigationBarItem(icon: Icon(Icons.category), label: "Categories"),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favorite"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          Icon(Icons.shopping_cart,color: Colors.white),
+          Icon(Icons.category,color: Colors.white),
+          Icon(Icons.account_circle,color: Colors.white),
         ],
         onTap: (index){
           provider.checkIndex(index);

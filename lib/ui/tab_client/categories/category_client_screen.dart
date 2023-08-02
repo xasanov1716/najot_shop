@@ -1,26 +1,26 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:najot_shop/utils/app_colors.dart';
+import 'package:najot_shop/utils/app_images.dart';
 import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/models/category_model.dart';
 import '../../../providers/category_provider.dart';
-import '../../tab_admin/widget/product_shimmer.dart';
-import 'add_category.dart';
+import '../../tab_admin/widget/global_shimmer.dart';
 
-class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({super.key});
+class CategoryScreenClient extends StatefulWidget {
+  const CategoryScreenClient({super.key});
 
   @override
-  State<CategoryScreen> createState() => _CategoryScreenState();
+  State<CategoryScreenClient> createState() => _CategoryScreenClientState();
 }
 
 List<CategoryModel>? categoryModels;
 String isError = "";
 bool isLoading = false;
 
-class _CategoryScreenState extends State<CategoryScreen> {
+class _CategoryScreenClientState extends State<CategoryScreenClient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,10 +46,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             height: 100,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16.r),
-                              color: Colors.white,
+                              color: AppColors.white,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
+                                  color: AppColors.passiveText.withOpacity(0.5),
                                   spreadRadius: 2,
                                   blurRadius: 5,
                                   offset: const Offset(0, 3),
@@ -60,15 +60,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 ClipRRect(
-                                  borderRadius: BorderRadius.circular(13),
+                                  borderRadius: BorderRadius.circular(13.r),
                                   child: categoryModel.imageUrl.isNotEmpty
                                       ? Image(
-                                    image: FileImage(
-                                      File(categoryModel.imageUrl),
-                                    ),
-                                  )
-                                      : Image.asset("assets/images/logo.png",
-                                      width: 120.w),
+                                          image: FileImage(
+                                            File(categoryModel.imageUrl),
+                                          ),
+                                        )
+                                      : Image.asset(
+                                          AppImages.logo,
+                                          width: 120.w,
+                                        ),
                                 ),
                                 const Spacer(),
                                 Text(
@@ -90,8 +92,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     child: Text(
                       "Empty!",
                       style: TextStyle(
-                        color: Colors.black.withOpacity(0.2),
-                        fontSize: 24,
+                        color: AppColors.black.withOpacity(0.2),
+                        fontSize: 24.sp,
                       ),
                     ),
                   );
@@ -101,7 +103,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               child: Text(snapshot.error.toString()),
             );
           }
-          return const Center(child: LoadData());
+          return const Center(child: Loading());
         },
       ),
     );

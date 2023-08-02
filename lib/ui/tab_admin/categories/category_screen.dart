@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -6,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/models/category_model.dart';
 import '../../../providers/category_provider.dart';
-import '../../tab_client/widget/product_shimmer.dart';
+import '../../tab_client/widget/global_shimmer.dart';
 import 'add_category.dart';
 
 class CategoryScreenAdmin extends StatefulWidget {
@@ -59,9 +60,12 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
                               children: [
                                 SlidableAction(
                                   onPressed: (context) {
-                                    context.read<CategoryProvider>().deleteCategory(
-                                        context: context,
-                                        categoryId: categoryModel.categoryId);
+                                    context
+                                        .read<CategoryProvider>()
+                                        .deleteCategory(
+                                            context: context,
+                                            categoryId:
+                                                categoryModel.categoryId);
                                     Navigator.pop(context);
                                   },
                                   borderRadius: BorderRadius.circular(15),
@@ -94,7 +98,8 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(13),
                                     child: categoryModel.imageUrl.isNotEmpty
-                                        ? Image.network(categoryModel.imageUrl
+                                        ? CachedNetworkImage(
+                                            imageUrl: categoryModel.imageUrl,
                                           )
                                         : Image.asset("assets/images/logo.png",
                                             width: 120.w),
@@ -131,7 +136,7 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
               child: Text(snapshot.error.toString()),
             );
           }
-          return const Center(child: LoadData());
+          return const Center(child: Loading());
         },
       ),
     );

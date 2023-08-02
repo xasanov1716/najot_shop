@@ -12,16 +12,13 @@ import '../utils/ui_utils/loading_dialog.dart';
 class ProductsProvider with ChangeNotifier {
   ProductsProvider({required this.productsService});
 
-  String prdudctUrl = '';
+  String productsUrl = '';
   final ProductsService productsService;
 
   TextEditingController productNameController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
   TextEditingController productDescController = TextEditingController();
   TextEditingController productCountController = TextEditingController();
-
-
-
 
   Future<void> addProduct({
     required BuildContext context,
@@ -38,11 +35,10 @@ class ProductsProvider with ChangeNotifier {
         productDesc.isNotEmpty &&
         priceText.isNotEmpty &&
         countText.isNotEmpty) {
-
       ProductModel productModel = ProductModel(
         count: int.parse(countText),
         price: int.parse(priceText),
-        productImages:[ prdudctUrl],
+        productImages: [productsUrl],
         categoryId: categoryId,
         productId: "",
         productName: name,
@@ -53,7 +49,7 @@ class ProductsProvider with ChangeNotifier {
 
       showLoading(context: context);
       UniversalData universalData =
-      await productsService.addProduct(productModel: productModel);
+          await productsService.addProduct(productModel: productModel);
       if (context.mounted) {
         hideLoading(dialogContext: context);
       }
@@ -73,15 +69,13 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
-
-
   Future<void> deleteProduct({
     required BuildContext context,
     required String productId,
   }) async {
     showLoading(context: context);
     UniversalData universalData =
-    await productsService.deleteProduct(productId: productId);
+        await productsService.deleteProduct(productId: productId);
     if (context.mounted) {
       hideLoading(dialogContext: context);
     }
@@ -100,9 +94,9 @@ class ProductsProvider with ChangeNotifier {
     if (categoryId.isEmpty) {
       yield* FirebaseFirestore.instance.collection("products").snapshots().map(
             (event1) => event1.docs
-            .map((doc) => ProductModel.fromJson(doc.data()))
-            .toList(),
-      );
+                .map((doc) => ProductModel.fromJson(doc.data()))
+                .toList(),
+          );
     } else {
       yield* FirebaseFirestore.instance
           .collection("products")
@@ -110,17 +104,24 @@ class ProductsProvider with ChangeNotifier {
           .snapshots()
           .map(
             (event1) => event1.docs
-            .map((doc) => ProductModel.fromJson(doc.data()))
-            .toList(),
-      );
+                .map(
+                  (doc) => ProductModel.fromJson(
+                    doc.data(),
+                  ),
+                )
+                .toList(),
+          );
     }
   }
 
   showMessage(BuildContext context, String error) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(error),
+      ),
+    );
     notifyListeners();
   }
-
 
   Future<void> updateProduct({
     required BuildContext context,
@@ -163,16 +164,16 @@ class ProductsProvider with ChangeNotifier {
   }
 
   Future<void> uploadProductImage(
-      BuildContext context,
-      XFile xFile,
-      ) async {
+    BuildContext context,
+    XFile xFile,
+  ) async {
     showLoading(context: context);
     UniversalData data = await FileUploader.imageUploader(xFile);
     if (context.mounted) {
       hideLoading(dialogContext: context);
     }
     if (data.error.isEmpty) {
-      prdudctUrl = data.data ;
+      productsUrl = data.data;
       notifyListeners();
     } else {
       if (context.mounted) {
@@ -194,8 +195,5 @@ class ProductsProvider with ChangeNotifier {
     productNameController.clear();
     productDescController.clear();
     productCountController.clear();
-
   }
-
-
 }

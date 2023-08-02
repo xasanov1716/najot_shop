@@ -24,7 +24,7 @@ class ProductAddScreen extends StatefulWidget {
 
 class _ProductAddScreenState extends State<ProductAddScreen> {
   ImagePicker picker = ImagePicker();
-  String imagePath = defaultConstatnsImages;
+  String imagePath = defaultConstantsImages;
   String currency = "";
 
   List<String> currencies = ["UZS", "USD", "RUB"];
@@ -191,7 +191,7 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                       },
                       style: TextButton.styleFrom(
                           backgroundColor: Theme.of(context).indicatorColor),
-                      child: imagePath == defaultConstatnsImages
+                      child: imagePath == defaultConstantsImages
                           ? Text(
                               imagePath,
                               style: const TextStyle(color: Colors.black),
@@ -211,11 +211,11 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                     ? "Add product"
                     : "Update product",
                 onTap: () {
-                  if (imagePath != defaultConstatnsImages &&
+                  if (imagePath != defaultConstantsImages &&
                       selectedCategoryId.isNotEmpty) {
                     context.read<ProductsProvider>().addProduct(
                           context: context,
-                          imageUrls: [context.read<ProductsProvider>().prdudctUrl],
+                          imageUrls: [context.read<ProductsProvider>().productsUrl],
                           categoryId: selectedCategoryId,
                           productCurrency: selectedCurrency,
                         );

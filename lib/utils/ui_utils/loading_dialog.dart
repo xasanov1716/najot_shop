@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../ui/tab_admin/widget/product_shimmer.dart';
-
+import '../../ui/tab_admin/widget/global_shimmer.dart';
 
 void showLoading({required BuildContext context}) {
   showDialog(
@@ -11,7 +9,7 @@ void showLoading({required BuildContext context}) {
       return Dialog(
         elevation: 0,
         backgroundColor: Colors.white.withOpacity(0.5),
-        child: const LoadData()
+        child: const Loading()
       );
     },
   );
