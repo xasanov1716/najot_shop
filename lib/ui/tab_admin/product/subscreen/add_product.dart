@@ -215,7 +215,7 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                       selectedCategoryId.isNotEmpty) {
                     context.read<ProductsProvider>().addProduct(
                           context: context,
-                          imageUrls: [imagePath],
+                          imageUrls: context.read<ProductsProvider>().prdudctUrl,
                           categoryId: selectedCategoryId,
                           productCurrency: selectedCurrency,
                         );

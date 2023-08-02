@@ -1,15 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../data/firebase/product_service.dart';
 import '../data/models/category_model.dart';
 import '../data/models/products_data_model.dart';
 import '../data/models/universal_data.dart';
+import '../data/upload_service.dart';
 import '../utils/ui_utils/loading_dialog.dart';
 
 class ProductsProvider with ChangeNotifier {
   ProductsProvider({required this.productsService});
 
+  List<String> prdudctUrl = [];
   final ProductsService productsService;
 
   TextEditingController productNameController = TextEditingController();
@@ -155,6 +158,25 @@ class ProductsProvider with ChangeNotifier {
         if (context.mounted) {
           showMessage(context, universalData.error);
         }
+      }
+    }
+  }
+
+  Future<void> uploadProductImage(
+      BuildContext context,
+      XFile xFile,
+      ) async {
+    showLoading(context: context);
+    UniversalData data = await FileUploader.imageUploader(xFile);
+    if (context.mounted) {
+      hideLoading(dialogContext: context);
+    }
+    if (data.error.isEmpty) {
+      prdudctUrl = data.data as List<String>;
+      notifyListeners();
+    } else {
+      if (context.mounted) {
+        showMessage(context, data.error);
       }
     }
   }

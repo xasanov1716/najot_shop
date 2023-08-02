@@ -19,27 +19,33 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
+  ImagePicker picker = ImagePicker();
   File? image;
 
-  Future pickImage() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      setState(() => this.image = imageTemp);
-    } on PlatformException catch (e) {
-      return e;
+  Future<void> _getFromCamera() async {
+    XFile? xFile = await picker.pickImage(
+      source: ImageSource.camera,
+      maxHeight: 512,
+      maxWidth: 512,
+    );
+
+    if (xFile != null) {
+      print("VBNKM<");
+      await Provider.of<CategoryProvider>(context,listen: false)
+          .uploadCategoryImage(context, xFile);
+
     }
   }
 
-  Future pickCamera() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      setState(() => this.image = imageTemp);
-    } on PlatformException catch (e) {
-      return e;
+  Future<void> _getFromGallery() async {
+    XFile? xFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxHeight: 512,
+      maxWidth: 512,
+    );
+    if (xFile != null) {
+      await Provider.of<CategoryProvider>(context,listen: false)
+          .uploadCategoryImage(context, xFile);
     }
   }
 
@@ -69,7 +75,7 @@ class _AddPageState extends State<AddPage> {
                     children: [
                       ZoomTapAnimation(
                         onTap: () {
-                          pickImage();
+                          _getFromGallery();
                         },
                         child: Container(
                           height: 80,
@@ -83,7 +89,7 @@ class _AddPageState extends State<AddPage> {
                       ),
                       ZoomTapAnimation(
                         onTap: () {
-                          pickImage();
+                          _getFromGallery();
                         },
                         child: Container(
                             height: 80,
@@ -111,7 +117,7 @@ class _AddPageState extends State<AddPage> {
                     children: [
                       ZoomTapAnimation(
                         onTap: () {
-                          pickCamera();
+                          _getFromCamera();
                         },
                         child: Container(
                           height: 80,
@@ -125,7 +131,7 @@ class _AddPageState extends State<AddPage> {
                       ),
                       ZoomTapAnimation(
                         onTap: () {
-                          pickCamera();
+                          _getFromCamera();
                         },
                         child: Container(
                             height: 80,
@@ -181,7 +187,7 @@ class _AddPageState extends State<AddPage> {
                                   .read<CategoryProvider>()
                                   .descriptionController
                                   .text,
-                              imageUrl: image?.path ?? "",
+                              imageUrl: context.read<CategoryProvider>().categoryUrl,
                               createdAt: DateTime.now().toString(),
                             ),
                           );

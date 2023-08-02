@@ -50,7 +50,7 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
                     (index) {
                   ProductModel productModel = snapshot.data![index];
                   return ListTile(
-                    leading: Image.file(File(productModel.productImages[0])),
+                    leading: Image.network(productModel.productImages[0]),
                     onLongPress: () {
                       context.read<ProductsProvider>().deleteProduct(
                         context: context,
