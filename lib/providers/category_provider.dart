@@ -83,7 +83,11 @@ class CategoryProvider with ChangeNotifier {
   Stream<List<CategoryModel>> getCategories() =>
       FirebaseFirestore.instance.collection("categories").snapshots().map(
             (event1) => event1.docs
-                .map((doc) => CategoryModel.fromJson(doc.data()))
+                .map(
+                  (doc) => CategoryModel.fromJson(
+                    doc.data(),
+                  ),
+                )
                 .toList(),
           );
 
@@ -92,17 +96,19 @@ class CategoryProvider with ChangeNotifier {
       SnackBar(
         content: Text(error),
         backgroundColor: Colors.deepPurpleAccent,
-        action: SnackBarAction(label: "Ok", onPressed: (){}),
+        action: SnackBarAction(
+          label: "Ok",
+          onPressed: () {},
+        ),
       ),
     );
     notifyListeners();
   }
 
-
   Future<void> uploadCategoryImage(
-      BuildContext context,
-      XFile xFile,
-      ) async {
+    BuildContext context,
+    XFile xFile,
+  ) async {
     showLoading(context: context);
     UniversalData data = await FileUploader.imageUploader(xFile);
     if (context.mounted) {
@@ -117,9 +123,6 @@ class CategoryProvider with ChangeNotifier {
       }
     }
   }
-
-
-
 
   clearTexts() {
     descriptionController.clear();

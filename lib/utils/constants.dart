@@ -1,2 +1,2 @@
-String addminEmail = 'admin@gmail.com';
-String defaultConstatnsImages = 'Select Image';
+String adminEmail = 'admin@gmail.com';
+String defaultConstantsImages = 'Select Image';

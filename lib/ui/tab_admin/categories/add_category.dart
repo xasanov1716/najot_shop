@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/models/category_model.dart';
 import '../../../providers/category_provider.dart';
-import '../../tab_client/categories/category_screen.dart';
+import 'category_screen.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -195,7 +195,7 @@ class _AddPageState extends State<AddPage> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CategoryScreen(),
+                          builder: (context) => const CategoryScreenAdmin(),
                         ),
                       );
                       Navigator.pop(context);

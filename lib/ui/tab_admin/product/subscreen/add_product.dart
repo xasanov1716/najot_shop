@@ -25,7 +25,7 @@ class ProductAddScreen extends StatefulWidget {
 
 class _ProductAddScreenState extends State<ProductAddScreen> {
   ImagePicker picker = ImagePicker();
-  String imagePath = defaultConstatnsImages;
+  String imagePath = defaultConstantsImages;
   String currency = "";
 
   List<String> currencies = ["UZS", "USD", "RUB"];
@@ -192,7 +192,7 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                       },
                       style: TextButton.styleFrom(
                           backgroundColor: Theme.of(context).indicatorColor),
-                      child: imagePath == defaultConstatnsImages
+                      child: imagePath == defaultConstantsImages
                           ? Text(
                               imagePath,
                               style: const TextStyle(color: Colors.black),
@@ -274,7 +274,7 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
           padding: const EdgeInsets.all(24),
           height: 200,
           decoration: BoxDecoration(
-            color: AppColors.c_162023,
+            color: Colors.deepPurple,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),

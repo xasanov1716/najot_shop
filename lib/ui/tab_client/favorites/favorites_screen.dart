@@ -12,7 +12,4 @@ class FavoritesScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }
-

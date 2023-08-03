@@ -4,11 +4,12 @@ class CategoriesDataModel {
   final String imageUrl;
   final String createdAt;
 
-  CategoriesDataModel(
-      {required this.id,
-        required this.name,
-        required this.createdAt,
-        required this.imageUrl});
+  CategoriesDataModel({
+    required this.id,
+    required this.name,
+    required this.createdAt,
+    required this.imageUrl,
+  });
 
   factory CategoriesDataModel.fromJson(Map<String, dynamic> json) {
     return CategoriesDataModel(
@@ -24,7 +25,7 @@ class CategoriesDataModel {
       "id": id,
       "name": name,
       "created_at": createdAt,
-      "image_url": imageUrl
+      "image_url": imageUrl,
     };
   }
 }
