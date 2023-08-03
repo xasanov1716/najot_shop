@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../app/app.dart';
+import '../utils/app_images.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -36,11 +38,11 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24.sp),
           child: Center(
             child: Image.asset(
-              "assets/images/logo.png",
-              width: 200,
+              AppImages.logo,
+              width: 200.w,
             ),
           ),
         ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:najot_shop/utils/app_colors.dart';
 
 class GlobalTextField extends StatefulWidget {
-   GlobalTextField({
+  const GlobalTextField({
     Key? key,
     required this.hintText,
     required this.keyboardType,
@@ -9,12 +11,13 @@ class GlobalTextField extends StatefulWidget {
     required this.textAlign,
     this.obscureText = false,
     required this.controller,
-    required this.title,  this.maxLine = 1,
+    required this.title,
+    this.maxLine = 1,
   }) : super(key: key);
 
   final String title;
   final String hintText;
-  int maxLine;
+  final int maxLine;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
   final TextAlign textAlign;
@@ -40,11 +43,12 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
               .titleMedium!
               .copyWith(fontWeight: FontWeight.w400),
         ),
-        const SizedBox(height: 5),
+        SizedBox(height: 5.h),
         TextField(
           maxLines: widget.maxLine,
           controller: widget.controller,
-          obscureText: widget.hintText=="Password"?isTap:widget.obscureText,
+          obscureText:
+              widget.hintText == "Password" ? isTap : widget.obscureText,
           cursorColor: Colors.deepPurpleAccent,
           keyboardType: widget.keyboardType,
           style: Theme.of(context).textTheme.titleMedium,
@@ -70,29 +74,30 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
                 : null,
             hintText: widget.hintText,
             hintStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: Colors.grey,
+                  color: AppColors.passiveText,
                 ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(4.r),
               borderSide:
-                  const BorderSide(width: 0.8, color: Colors.deepPurpleAccent),
+                  BorderSide(width: 0.8.w, color: AppColors.globalPassive),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
-              borderSide: const BorderSide(width: 0.8, color: Colors.redAccent),
+              borderRadius: BorderRadius.circular(4.r),
+              borderSide:
+                  BorderSide(width: 0.8.w, color: AppColors.deleteColor),
             ),
             disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(4.r),
               borderSide:
-                  const BorderSide(width: 0.8, color: Colors.deepPurpleAccent),
+                  BorderSide(width: 0.8.w, color: AppColors.globalPassive),
             ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
-              borderSide: const BorderSide(width: 0.8, color: Colors.red),
+              borderRadius: BorderRadius.circular(4.r),
+              borderSide: BorderSide(width: 0.8.w, color: AppColors.deleteColor),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
-              borderSide: const BorderSide(width: 1, color: Colors.deepPurple),
+              borderRadius: BorderRadius.circular(4.r),
+              borderSide: BorderSide(width: 1.w, color: AppColors.globalPassive),
             ),
           ),
         )

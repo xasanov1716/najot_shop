@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:najot_shop/data/models/category_model.dart';
 import '../data/firebase/category_service.dart';
 import '../data/models/universal_data.dart';
+import '../data/upload_service.dart';
 import '../utils/ui_utils/loading_dialog.dart';
 
 class CategoryProvider with ChangeNotifier {
@@ -12,6 +14,8 @@ class CategoryProvider with ChangeNotifier {
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+
+  String categoryUrl = "";
 
   Future<void> addCategory({
     required BuildContext context,
@@ -79,7 +83,11 @@ class CategoryProvider with ChangeNotifier {
   Stream<List<CategoryModel>> getCategories() =>
       FirebaseFirestore.instance.collection("categories").snapshots().map(
             (event1) => event1.docs
-                .map((doc) => CategoryModel.fromJson(doc.data()))
+                .map(
+                  (doc) => CategoryModel.fromJson(
+                    doc.data(),
+                  ),
+                )
                 .toList(),
           );
 
@@ -88,12 +96,33 @@ class CategoryProvider with ChangeNotifier {
       SnackBar(
         content: Text(error),
         backgroundColor: Colors.deepPurpleAccent,
-        action: SnackBarAction(label: "Ok", onPressed: (){}),
+        action: SnackBarAction(
+          label: "Ok",
+          onPressed: () {},
+        ),
       ),
     );
     notifyListeners();
   }
 
+  Future<void> uploadCategoryImage(
+    BuildContext context,
+    XFile xFile,
+  ) async {
+    showLoading(context: context);
+    UniversalData data = await FileUploader.imageUploader(xFile);
+    if (context.mounted) {
+      hideLoading(dialogContext: context);
+    }
+    if (data.error.isEmpty) {
+      categoryUrl = data.data as String;
+      notifyListeners();
+    } else {
+      if (context.mounted) {
+        showMessage(context, data.error);
+      }
+    }
+  }
 
   clearTexts() {
     descriptionController.clear();

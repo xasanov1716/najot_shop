@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/models/category_model.dart';
 import '../../../providers/category_provider.dart';
-import '../../tab_client/categories/category_screen.dart';
+import 'category_screen.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -19,27 +19,33 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
+  ImagePicker picker = ImagePicker();
   File? image;
 
-  Future pickImage() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      setState(() => this.image = imageTemp);
-    } on PlatformException catch (e) {
-      return e;
+  Future<void> _getFromCamera() async {
+    XFile? xFile = await picker.pickImage(
+      source: ImageSource.camera,
+      maxHeight: 512,
+      maxWidth: 512,
+    );
+
+    if (xFile != null) {
+      print("VBNKM<");
+      await Provider.of<CategoryProvider>(context,listen: false)
+          .uploadCategoryImage(context, xFile);
+
     }
   }
 
-  Future pickCamera() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      setState(() => this.image = imageTemp);
-    } on PlatformException catch (e) {
-      return e;
+  Future<void> _getFromGallery() async {
+    XFile? xFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxHeight: 512,
+      maxWidth: 512,
+    );
+    if (xFile != null) {
+      await Provider.of<CategoryProvider>(context,listen: false)
+          .uploadCategoryImage(context, xFile);
     }
   }
 
@@ -65,49 +71,90 @@ class _AddPageState extends State<AddPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ZoomTapAnimation(
-                    onTap: () {
-                      pickImage();
-                    },
-                    child: Container(
-                      height: 80,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.deepPurpleAccent.withOpacity(0.4),
+                  Stack(
+                    children: [
+                      ZoomTapAnimation(
+                        onTap: () {
+                          _getFromGallery();
+                        },
+                        child: Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.deepPurpleAccent.withOpacity(0.4),
+                          ),
+                          child: const Icon(Icons.image, size: 30),
+                        ),
                       ),
-                      child: const Icon(Icons.image, size: 30),
-                    ),
-                  ),
-                  Container(
-                      height: 80,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.deepPurpleAccent.withOpacity(0.4),
-                      ),
-                      child: image?.path!=null
-                          ? Image(
-                            width: 80,
+                      // ClipRRect(borderRadius: BorderRadius.circular(32),child: Image(image: FileImage(File(context.read<CategoryProvider>().categoryUrl)),)),
+                      ZoomTapAnimation(
+                        onTap: () {
+                          _getFromGallery();
+                        },
+                        child: Container(
                             height: 80,
-                            image: FileImage(
-                              File(image!.path),
+                            width: 80,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.deepPurpleAccent.withOpacity(0.4),
                             ),
-                          )
-                          : Image.asset("assets/images/logo.img")),
-                  ZoomTapAnimation(
-                    onTap: () {
-                      pickCamera();
-                    },
-                    child: Container(
-                      height: 80,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.deepPurpleAccent.withOpacity(0.4),
+                            child: image?.path!=null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image(
+                                      width: 80,
+                                      height: 80,
+                                      image: FileImage(
+                                        File(image!.path),
+                                      ),
+                                    ),
+                                  )
+                                : const Icon(Icons.image, size: 30)),
                       ),
-                      child: const Icon(Icons.camera_alt, size: 30),
-                    ),
+                    ],
+                  ),
+                  Stack(
+                    children: [
+                      ZoomTapAnimation(
+                        onTap: () {
+                          _getFromCamera();
+                        },
+                        child: Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.deepPurpleAccent.withOpacity(0.4),
+                          ),
+                          child: const Icon(Icons.camera_alt, size: 30),
+                        ),
+                      ),
+                      ZoomTapAnimation(
+                        onTap: () {
+                          _getFromCamera();
+                        },
+                        child: Container(
+                            height: 80,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.deepPurpleAccent.withOpacity(0.4),
+                            ),
+                            child: image?.path!=null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image(
+                                      width: 80,
+                                      height: 80,
+                                      image: FileImage(
+                                        File(image!.path),
+                                      ),
+                                    ),
+                                  )
+                                : const Icon(Icons.camera_alt, size: 30)),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -141,23 +188,23 @@ class _AddPageState extends State<AddPage> {
                                   .read<CategoryProvider>()
                                   .descriptionController
                                   .text,
-                              imageUrl: image?.path ?? "",
+                              imageUrl: context.read<CategoryProvider>().categoryUrl,
                               createdAt: DateTime.now().toString(),
                             ),
                           );
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CategoryScreen(),
+                          builder: (context) => const CategoryScreenAdmin(),
                         ),
                       );
                       Navigator.pop(context);
                     }
                     context.read<CategoryProvider>().nameController.clear();
-                    // context
-                    //     .read<CategoryProvider>()
-                    //     .descriptionController
-                    //     .clear();
+                    context
+                        .read<CategoryProvider>()
+                        .descriptionController
+                        .clear();
                   })
             ],
           ),

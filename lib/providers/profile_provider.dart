@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:najot_shop/utils/app_colors.dart';
 
 import '../data/firebase/profile_service.dart';
 import '../data/models/universal_data.dart';
@@ -12,7 +13,6 @@ class ProfileProvider with ChangeNotifier {
   }
 
   final ProfileService profileService;
-
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -30,9 +30,12 @@ class ProfileProvider with ChangeNotifier {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(error),
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: AppColors.globalPassive,
         duration: const Duration(seconds: 7),
-        action: SnackBarAction(label: "Ok", onPressed: (){}),
+        action: SnackBarAction(
+          label: "Ok",
+          onPressed: () {},
+        ),
       ),
     );
     isLoading = false;

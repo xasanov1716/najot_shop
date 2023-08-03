@@ -1,66 +1,5 @@
-//
-// import 'dart:io';
-//
-// import 'package:flutter/material.dart';
-// import 'package:najot_shop/ui/tab_admin/product/subscreen/add_product.dart';
-// import 'package:provider/provider.dart';
-//
-// import '../../../data/models/products_data_model.dart';
-// import '../../../providers/product_provider.dart';
-//
-// class ProductScreenClient extends StatefulWidget {
-//   const ProductScreenClient({super.key});
-//
-//   @override
-//   State<ProductScreenClient> createState() => _ProductScreenClientState();
-// }
-//
-// class _ProductScreenClientState extends State<ProductScreenClient> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("All Products"),
-//       ),
-//       body: StreamBuilder<List<ProductModel>>(
-//         stream: context.read<ProductsProvider>().getProducts(),
-//         builder:
-//             (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshot) {
-//           if (snapshot.hasData) {
-//             return snapshot.data!.isNotEmpty
-//                 ? ListView(
-//               children: List.generate(
-//                 snapshot.data!.length,
-//                     (index) {
-//                   ProductModel productModel = snapshot.data![index];
-//                   return ListTile(
-//                     leading: Image.file(File(productModel.productImages[0])),
-//                     onLongPress: () {
-//                       context.read<ProductsProvider>().deleteProduct(
-//                         context: context,
-//                         productId: productModel.productId,
-//                       );
-//                     },
-//                     title: Text(productModel.productName),
-//                     subtitle: Text(productModel.description),
-//                   );
-//                 },
-//               ),
-//             )
-//                 : const Center(child: Text("Products Empty!"));
-//           }
-//           if (snapshot.hasError) {
-//             return Center(
-//               child: Text(snapshot.error.toString()),
-//             );
-//           }
-//           return const Center(child: CircularProgressIndicator());
-//         },
-//       ),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:najot_shop/ui/tab_client/product/widgets/category_item_view.dart';
 import 'package:najot_shop/ui/tab_client/product/widgets/product_item_view.dart';
 import 'package:provider/provider.dart';
@@ -68,7 +7,7 @@ import '../../../data/models/category_model.dart';
 import '../../../data/models/products_data_model.dart';
 import '../../../providers/category_provider.dart';
 import '../../../providers/product_provider.dart';
-import '../../tab_admin/widget/product_shimmer.dart';
+import '../widget/global_shimmer.dart';
 
 class ProductScreenClient extends StatefulWidget {
   const ProductScreenClient({super.key});
@@ -87,7 +26,6 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
         title: const Text("Products"),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           StreamBuilder<List<CategoryModel>>(
             stream: context.read<CategoryProvider>().getCategories(),
@@ -96,7 +34,7 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
               if (snapshot.hasData) {
                 return snapshot.data!.isNotEmpty
                     ? SizedBox(
-                        height: 50,
+                        height: 50.h,
                         width: MediaQuery.of(context).size.width,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
@@ -143,7 +81,7 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
                   child: Text(snapshot.error.toString()),
                 );
               }
-              return const LinearProgressIndicator();
+              return const Center(child: Loading());
             },
           ),
           StreamBuilder<List<ProductModel>>(
@@ -155,25 +93,24 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
               if (snapshot.hasData) {
                 return snapshot.data!.isNotEmpty
                     ? Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: GridView(
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.7,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                            ),
-                            children: List.generate(
+                        child: GridView(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.7,
+                          ),
+                          children: [
+                            ...List.generate(
                               snapshot.data!.length,
                               (index) {
-                                ProductModel productModel = snapshot.data![index];
+                                ProductModel productModel =
+                                    snapshot.data![index];
                                 return ProductItemView(
                                   productModel: productModel,
                                 );
                               },
                             ),
-                          ),
+                          ],
                         ),
                       )
                     : const Center(child: Text("Product Empty!"));
@@ -183,7 +120,7 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
                   child: Text(snapshot.error.toString()),
                 );
               }
-              return const Center(child: LoadData());
+              return const Center(child: Loading());
             },
           ),
         ],

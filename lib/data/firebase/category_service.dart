@@ -10,7 +10,6 @@ class CategoryService {
       DocumentReference newCategory = await FirebaseFirestore.instance
           .collection("categories")
           .add(categoryModel.toJson());
-
       await FirebaseFirestore.instance
           .collection("categories")
           .doc(newCategory.id)
@@ -22,7 +21,9 @@ class CategoryService {
     } on FirebaseException catch (e) {
       return UniversalData(error: e.code);
     } catch (error) {
-      return UniversalData(error: error.toString());
+      return UniversalData(
+        error: error.toString(),
+      );
     }
   }
 
@@ -32,13 +33,17 @@ class CategoryService {
       await FirebaseFirestore.instance
           .collection("categories")
           .doc(categoryModel.categoryId)
-          .update(categoryModel.toJson());
+          .update(
+            categoryModel.toJson(),
+          );
 
       return UniversalData(data: "Category updated!");
     } on FirebaseException catch (e) {
       return UniversalData(error: e.code);
     } catch (error) {
-      return UniversalData(error: error.toString());
+      return UniversalData(
+        error: error.toString(),
+      );
     }
   }
 
@@ -53,7 +58,9 @@ class CategoryService {
     } on FirebaseException catch (e) {
       return UniversalData(error: e.code);
     } catch (error) {
-      return UniversalData(error: error.toString());
+      return UniversalData(
+        error: error.toString(),
+      );
     }
   }
 }

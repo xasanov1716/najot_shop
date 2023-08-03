@@ -18,11 +18,17 @@ class App extends StatelessWidget {
         stream: context.read<AuthProvider>().listenAuthState(),
         builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.hasError) {
-            return Center(child: Text(snapshot.error.toString()));
+            return Center(
+              child: Text(
+                snapshot.error.toString(),
+              ),
+            );
           } else if (snapshot.data == null) {
             return const AuthScreen();
           } else {
-            return snapshot.data!.email == addminEmail ? TabBoxAdmin() : TabBox();
+            return snapshot.data!.email == adminEmail
+                ? const TabBoxAdmin()
+                : const TabBoxClient();
           }
         },
       ),
