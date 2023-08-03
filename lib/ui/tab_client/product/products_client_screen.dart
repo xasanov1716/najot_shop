@@ -97,7 +97,7 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            childAspectRatio: 0.7,
+                            childAspectRatio: 0.6,
                           ),
                           children: [
                             ...List.generate(
@@ -106,6 +106,7 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
                                 ProductModel productModel =
                                     snapshot.data![index];
                                 return ProductItemView(
+                                  index: index,
                                   productModel: productModel,
                                 );
                               },
