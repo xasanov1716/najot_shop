@@ -93,16 +93,24 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
               if (snapshot.hasData) {
                 return snapshot.data!.isNotEmpty
                     ? Expanded(
-                        child: ListView(
-                          children: List.generate(
-                            snapshot.data!.length,
-                            (index) {
-                              ProductModel productModel = snapshot.data![index];
-                              return ProductItemView(
-                                productModel: productModel,
-                              );
-                            },
+                        child: GridView(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.7,
                           ),
+                          children: [
+                            ...List.generate(
+                              snapshot.data!.length,
+                              (index) {
+                                ProductModel productModel =
+                                    snapshot.data![index];
+                                return ProductItemView(
+                                  productModel: productModel,
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       )
                     : const Center(child: Text("Product Empty!"));

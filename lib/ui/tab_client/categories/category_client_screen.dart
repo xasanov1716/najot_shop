@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:najot_shop/utils/app_colors.dart';
@@ -38,51 +39,46 @@ class _CategoryScreenClientState extends State<CategoryScreenClient> {
                       snapshot.data!.length,
                       (index) {
                         CategoryModel categoryModel = snapshot.data![index];
-                        return ZoomTapAnimation(
-                          onTap: () {},
-                          child: Container(
-                            margin: EdgeInsets.all(10.sp),
-                            padding: EdgeInsets.all(5.sp),
-                            height: 100,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16.r),
-                              color: AppColors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.passiveText.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 3),
+                        return Container(
+                          margin: EdgeInsets.all(10.sp),
+                          padding: EdgeInsets.all(5.sp),
+                          height: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.r),
+                            color: AppColors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.passiveText.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(13.r),
+                                child: categoryModel.imageUrl.isNotEmpty
+                                    ? CachedNetworkImage(
+                                        imageUrl: categoryModel.imageUrl,
+                                      )
+                                    : Image.asset(
+                                        AppImages.logo,
+                                        width: 120.w,
+                                      ),
+                              ),
+                              const Spacer(),
+                              Text(
+                                categoryModel.categoryName,
+                                style: TextStyle(
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.w700,
                                 ),
-                              ],
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(13.r),
-                                  child: categoryModel.imageUrl.isNotEmpty
-                                      ? Image(
-                                          image: FileImage(
-                                            File(categoryModel.imageUrl),
-                                          ),
-                                        )
-                                      : Image.asset(
-                                          AppImages.logo,
-                                          width: 120.w,
-                                        ),
-                                ),
-                                const Spacer(),
-                                Text(
-                                  categoryModel.categoryName,
-                                  style: TextStyle(
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                const Spacer(),
-                              ],
-                            ),
+                              ),
+                              const Spacer(),
+                            ],
                           ),
                         );
                       },
