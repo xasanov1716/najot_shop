@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../ui/tab_admin/widget/global_shimmer.dart';
+import '../../ui/tab_client/widget/global_shimmer.dart';
 
 void showLoading({required BuildContext context}) {
   showDialog(

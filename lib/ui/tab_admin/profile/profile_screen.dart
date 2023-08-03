@@ -1,14 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:najot_shop/ui/auth/widgets/global_button.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/auth_provider.dart';
 import '../../../providers/profile_provider.dart';
 import '../../auth/widgets/global_text_fields.dart';
-import '../widget/global_shimmer.dart';
+import '../widget/product_shimmer.dart';
 
 class ProfileScreenAdmin extends StatefulWidget {
   const ProfileScreenAdmin({super.key});
@@ -111,6 +110,15 @@ class _ProfileScreenAdminState extends State<ProfileScreenAdmin> {
                     ),
                   ),
                 ),
+                Center(
+                  child: Text(
+                    user.phoneNumber ?? "Not found!",
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
                 GlobalTextField(
                   hintText: "Username",
                   keyboardType: TextInputType.emailAddress,
@@ -120,7 +128,7 @@ class _ProfileScreenAdminState extends State<ProfileScreenAdmin> {
                   title: '',
                   obscureText: false,
                 ),
-                SizedBox(height: 70.h),
+                const SizedBox(height: 70),
                 GlobalButton(
                   text: "Update",
                   onTap: () {
@@ -136,7 +144,7 @@ class _ProfileScreenAdminState extends State<ProfileScreenAdmin> {
             visible: context.watch<ProfileProvider>().isLoading,
             child: const Align(
               alignment: Alignment.bottomCenter,
-              child: Loading(),
+              child: LoadData(),
             ),
           ),
         ],

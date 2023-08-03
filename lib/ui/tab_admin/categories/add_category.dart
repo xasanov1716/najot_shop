@@ -1,6 +1,7 @@
 import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:najot_shop/ui/auth/widgets/global_button.dart';
 import 'package:najot_shop/ui/auth/widgets/global_text_fields.dart';
@@ -8,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/models/category_model.dart';
 import '../../../providers/category_provider.dart';
-import '../../tab_client/categories/category_client_screen.dart';
+import 'category_screen.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -29,9 +30,10 @@ class _AddPageState extends State<AddPage> {
     );
 
     if (xFile != null) {
-      // ignore: use_build_context_synchronously
-      await Provider.of<CategoryProvider>(context, listen: false)
+      print("VBNKM<");
+      await Provider.of<CategoryProvider>(context,listen: false)
           .uploadCategoryImage(context, xFile);
+
     }
   }
 
@@ -42,8 +44,7 @@ class _AddPageState extends State<AddPage> {
       maxWidth: 512,
     );
     if (xFile != null) {
-      // ignore: use_build_context_synchronously
-      await Provider.of<CategoryProvider>(context, listen: false)
+      await Provider.of<CategoryProvider>(context,listen: false)
           .uploadCategoryImage(context, xFile);
     }
   }
@@ -70,43 +71,90 @@ class _AddPageState extends State<AddPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ZoomTapAnimation(
-                    onTap: () {
-                      _getFromGallery();
-                    },
-                    child: Container(
-                      height: 80,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.deepPurpleAccent.withOpacity(0.4),
+                  Stack(
+                    children: [
+                      ZoomTapAnimation(
+                        onTap: () {
+                          _getFromGallery();
+                        },
+                        child: Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.deepPurpleAccent.withOpacity(0.4),
+                          ),
+                          child: const Icon(Icons.image, size: 30),
+                        ),
                       ),
-                      child: const Icon(Icons.image, size: 30),
-                    ),
+                      // ClipRRect(borderRadius: BorderRadius.circular(32),child: Image(image: FileImage(File(context.read<CategoryProvider>().categoryUrl)),)),
+                      ZoomTapAnimation(
+                        onTap: () {
+                          _getFromGallery();
+                        },
+                        child: Container(
+                            height: 80,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.deepPurpleAccent.withOpacity(0.4),
+                            ),
+                            child: image?.path!=null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image(
+                                      width: 80,
+                                      height: 80,
+                                      image: FileImage(
+                                        File(image!.path),
+                                      ),
+                                    ),
+                                  )
+                                : const Icon(Icons.image, size: 30)),
+                      ),
+                    ],
                   ),
-                  Container(
-                      height: 97,
-                      width: 130,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.deepPurpleAccent.withOpacity(0.4),
+                  Stack(
+                    children: [
+                      ZoomTapAnimation(
+                        onTap: () {
+                          _getFromCamera();
+                        },
+                        child: Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.deepPurpleAccent.withOpacity(0.4),
+                          ),
+                          child: const Icon(Icons.camera_alt, size: 30),
+                        ),
                       ),
-                      child: image?.path != null
-                          ? CachedNetworkImage(imageUrl: image!.path)
-                          : Image.asset("assets/images/logo.png")),
-                  ZoomTapAnimation(
-                    onTap: () {
-                      _getFromCamera();
-                    },
-                    child: Container(
-                      height: 80,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.deepPurpleAccent.withOpacity(0.4),
+                      ZoomTapAnimation(
+                        onTap: () {
+                          _getFromCamera();
+                        },
+                        child: Container(
+                            height: 80,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.deepPurpleAccent.withOpacity(0.4),
+                            ),
+                            child: image?.path!=null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image(
+                                      width: 80,
+                                      height: 80,
+                                      image: FileImage(
+                                        File(image!.path),
+                                      ),
+                                    ),
+                                  )
+                                : const Icon(Icons.camera_alt, size: 30)),
                       ),
-                      child: const Icon(Icons.camera_alt, size: 30),
-                    ),
+                    ],
                   ),
                 ],
               ),
@@ -140,15 +188,14 @@ class _AddPageState extends State<AddPage> {
                                   .read<CategoryProvider>()
                                   .descriptionController
                                   .text,
-                              imageUrl:
-                                  context.read<CategoryProvider>().categoryUrl,
+                              imageUrl: context.read<CategoryProvider>().categoryUrl,
                               createdAt: DateTime.now().toString(),
                             ),
                           );
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CategoryScreenClient(),
+                          builder: (context) => const CategoryScreenAdmin(),
                         ),
                       );
                       Navigator.pop(context);

@@ -7,7 +7,7 @@ import '../../../data/models/category_model.dart';
 import '../../../data/models/products_data_model.dart';
 import '../../../providers/category_provider.dart';
 import '../../../providers/product_provider.dart';
-import '../../tab_admin/widget/global_shimmer.dart';
+import '../widget/global_shimmer.dart';
 
 class ProductScreenClient extends StatefulWidget {
   const ProductScreenClient({super.key});

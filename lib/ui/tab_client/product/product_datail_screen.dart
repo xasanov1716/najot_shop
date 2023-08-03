@@ -6,7 +6,7 @@ import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 import '../../../data/models/products_data_model.dart';
 import '../../../providers/product_provider.dart';
-import '../../tab_admin/widget/global_shimmer.dart';
+import '../widget/global_shimmer.dart';
 
 class ProductInfo extends StatefulWidget {
   const ProductInfo({super.key});

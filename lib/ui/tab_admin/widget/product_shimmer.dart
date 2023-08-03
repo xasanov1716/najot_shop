@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class Loading extends StatelessWidget {
-  const Loading({super.key});
+class LoadData extends StatelessWidget {
+  const LoadData({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class Loading extends StatelessWidget {
             'Loading...',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 26,
+              fontSize: 30,
               fontWeight:
               FontWeight.bold,
             ),

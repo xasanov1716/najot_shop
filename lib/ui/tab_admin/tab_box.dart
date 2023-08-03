@@ -1,7 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:najot_shop/providers/tab_provider.dart';
 import 'package:najot_shop/providers/tab_provider_admin.dart';
 import 'package:provider/provider.dart';
+
+import '../../utils/app_colors.dart';
 
 class TabBoxAdmin extends StatefulWidget {
   const TabBoxAdmin({super.key});
@@ -18,12 +21,12 @@ class _TabBoxAdminState extends State<TabBoxAdmin> {
       body:IndexedStack(index: provider.activeIndex,children:provider.screens,) ,
       bottomNavigationBar: CurvedNavigationBar(
         index: provider.activeIndex,
-        color: Colors.deepPurple,
-        backgroundColor: Colors.white,
-        items: const [
-          Icon(Icons.shopping_cart,color: Colors.white),
-          Icon(Icons.category,color: Colors.white),
-          Icon(Icons.account_circle,color: Colors.white),
+        color: AppColors.globalActive,
+        backgroundColor: AppColors.white,
+        items: [
+          Icon(Icons.shopping_cart,color: AppColors.white),
+          Icon(Icons.category,color: AppColors.white),
+          Icon(Icons.account_circle,color: AppColors.white),
         ],
         onTap: (index){
           provider.checkIndex(index);

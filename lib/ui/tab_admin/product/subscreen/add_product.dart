@@ -9,6 +9,7 @@ import '../../../../data/models/category_model.dart';
 import '../../../../data/models/products_data_model.dart';
 import '../../../../providers/category_provider.dart';
 import '../../../../providers/product_provider.dart';
+import '../../../../utils/app_colors.dart';
 import '../../../auth/widgets/global_button.dart';
 import '../../../auth/widgets/global_text_fields.dart';
 
@@ -211,34 +212,50 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                     ? "Add product"
                     : "Update product",
                 onTap: () {
-                  if (imagePath != defaultConstantsImages &&
+                  // if (imagePath != defaultConstatnsImages &&
+                  //     selectedCategoryId.isNotEmpty) {
+                  //   context.read<ProductsProvider>().addProduct(
+                  //         context: context,
+                  //         categoryId: selectedCategoryId,
+                  //         productCurrency: selectedCurrency,
+                  //       );
+                  if (context
+                          .read<ProductsProvider>()
+                          .uploadedImagesUrls
+                          .isNotEmpty &&
                       selectedCategoryId.isNotEmpty) {
                     context.read<ProductsProvider>().addProduct(
                           context: context,
-                          imageUrls: [context.read<ProductsProvider>().productsUrl],
                           categoryId: selectedCategoryId,
                           productCurrency: selectedCurrency,
                         );
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        duration: const Duration(milliseconds: 500),
-                        backgroundColor: Colors.deepPurple.withOpacity(0.4),
-                        margin: const EdgeInsets.symmetric(
-                          vertical: 100,
-                          horizontal: 20,
-                        ),
-                        behavior: SnackBarBehavior.floating,
-                        content: const Text(
-                          "Error !!!",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
+                    if (context.mounted) {
+                      context.read<ProductsProvider>().updateProduct(
+                            context: context,
+                            categoryId: selectedCategoryId,
+                            productCurrency: currency,
+                          );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: const Duration(milliseconds: 500),
+                          backgroundColor: Colors.deepPurple.withOpacity(0.4),
+                          margin: const EdgeInsets.symmetric(
+                            vertical: 100,
+                            horizontal: 20,
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          content: const Text(
+                            "Error !!!",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                            ),
                           ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   }
                 }),
             const SizedBox(height: 10)
@@ -256,23 +273,15 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
         return Container(
           padding: const EdgeInsets.all(24),
           height: 200,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            color: Colors.deepPurple,
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
           ),
           child: Column(
             children: [
-              ListTile(
-                onTap: () {
-                  _getFromCamera();
-                  Navigator.pop(context);
-                },
-                leading: const Icon(Icons.camera_alt),
-                title: const Text("Select from Camera"),
-              ),
               ListTile(
                 onTap: () {
                   _getFromGallery();
@@ -288,30 +297,15 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
     );
   }
 
-  Future<void> _getFromCamera() async {
-    XFile? xFile = await picker.pickImage(
-      source: ImageSource.camera,
-      maxHeight: 512,
-      maxWidth: 512,
-    );
-
-    if (xFile != null) {
-      print("VBNKM<");
-      await Provider.of<ProductsProvider>(context,listen: false)
-          .uploadProductImage(context, xFile);
-
-    }
-  }
-
   Future<void> _getFromGallery() async {
-    XFile? xFile = await picker.pickImage(
-      source: ImageSource.gallery,
+    List<XFile> xFiles = await picker.pickMultiImage(
       maxHeight: 512,
       maxWidth: 512,
     );
-    if (xFile != null) {
-      await Provider.of<ProductsProvider>(context,listen: false)
-          .uploadProductImage(context, xFile);
-    }
+    await Provider.of<ProductsProvider>(context, listen: false)
+        .uploadProductImages(
+      context: context,
+      images: xFiles,
+    );
   }
 }

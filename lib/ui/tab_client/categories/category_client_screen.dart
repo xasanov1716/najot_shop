@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/models/category_model.dart';
 import '../../../providers/category_provider.dart';
-import '../../tab_admin/widget/global_shimmer.dart';
+import '../widget/global_shimmer.dart';
 
 class CategoryScreenClient extends StatefulWidget {
   const CategoryScreenClient({super.key});

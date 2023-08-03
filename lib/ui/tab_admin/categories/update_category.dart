@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/models/category_model.dart';
 import '../../../providers/category_provider.dart';
-import '../../tab_client/categories/category_client_screen.dart';
+import 'category_screen.dart';
 
 class UpdatePage extends StatefulWidget {
   const UpdatePage({Key? key}) : super(key: key);
@@ -143,7 +143,7 @@ class _UpdatePageState extends State<UpdatePage> {
                     ),
                   );
                   Navigator.pushReplacement(context,
-                      CupertinoPageRoute(builder: (context) => const CategoryScreenClient()));
+                      CupertinoPageRoute(builder: (context) => const CategoryScreenAdmin()));
                 }
                 context.read<CategoryProvider>().nameController.clear();
                 context.read<CategoryProvider>().descriptionController.clear();
