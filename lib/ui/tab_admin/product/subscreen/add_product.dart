@@ -209,13 +209,6 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                     ? "Add product"
                     : "Update product",
                 onTap: () {
-                  // if (imagePath != defaultConstatnsImages &&
-                  //     selectedCategoryId.isNotEmpty) {
-                  //   context.read<ProductsProvider>().addProduct(
-                  //         context: context,
-                  //         categoryId: selectedCategoryId,
-                  //         productCurrency: selectedCurrency,
-                  //       );
                   if (context
                           .read<ProductsProvider>()
                           .uploadedImagesUrls
@@ -269,12 +262,12 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
       builder: (BuildContext context) {
         return Container(
           padding: const EdgeInsets.all(24),
-          height: 200,
-          decoration: BoxDecoration(
-            color: Colors.deepPurple,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
+          height: 105,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(26),
+              topRight: Radius.circular(26),
             ),
           ),
           child: Column(
