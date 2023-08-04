@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:najot_shop/utils/app_colors.dart';
 import 'package:provider/provider.dart';
-
 import '../../../providers/auth_provider.dart';
 import '../../../utils/app_images.dart';
 import '../widgets/global_button.dart';
@@ -9,7 +9,10 @@ import '../widgets/global_login_with_screen.dart';
 import '../widgets/global_text_fields.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key, required this.onChanged});
+  const SignUpScreen({
+    super.key,
+    required this.onChanged,
+  });
 
   final VoidCallback onChanged;
 
@@ -20,9 +23,12 @@ class SignUpScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 30),
-            Image.asset("assets/images/singup_logo.png", width: 250),
-            const SizedBox(height: 30),
+            SizedBox(height: 30.h),
+            Image.asset(
+              AppImages.logoSingUp,
+              width: 250,
+            ),
+            SizedBox(height: 30.h),
             GlobalTextField(
               hintText: "Username",
               keyboardType: TextInputType.emailAddress,
@@ -32,9 +38,7 @@ class SignUpScreen extends StatelessWidget {
               title: 'Username',
               obscureText: false,
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20.h),
             GlobalTextField(
               hintText: "Email",
               keyboardType: TextInputType.emailAddress,
@@ -44,7 +48,7 @@ class SignUpScreen extends StatelessWidget {
               title: 'Email',
               obscureText: false,
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
             GlobalTextField(
               hintText: "Password",
               keyboardType: TextInputType.emailAddress,
@@ -54,24 +58,28 @@ class SignUpScreen extends StatelessWidget {
               title: 'Password',
               obscureText: true,
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
             GetLoginWithButton(
-                text: "Login with Google", img: AppImages.google),
-            const SizedBox(height: 20),
+              text: "Login with Google",
+              img: AppImages.google,
+            ),
+            SizedBox(height: 20.h),
             GlobalButton(
-                text: "Sign up",
-                onTap: () {
-                  context.read<AuthProvider>().signUpUser(context);
-                }),
-            const SizedBox(height: 20),
+              text: "Sign up",
+              onTap: () {
+                context.read<AuthProvider>().signUpUser(context);
+              },
+            ),
+            SizedBox(height: 20.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "Already have an account?",
                   style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                      color: Colors.deepPurpleAccent,
-                      fontWeight: FontWeight.w400),
+                        color: AppColors.globalPassive,
+                        fontWeight: FontWeight.w400,
+                      ),
                 ),
                 GestureDetector(
                   onTap: () {

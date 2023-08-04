@@ -1,4 +1,4 @@
-class UniversalData{
+class UniversalData {
   UniversalData({
     this.error = "",
     this.data,

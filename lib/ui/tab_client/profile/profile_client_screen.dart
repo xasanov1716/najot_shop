@@ -1,22 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:najot_shop/ui/auth/widgets/global_button.dart';
+import 'package:najot_shop/utils/app_colors.dart';
 import 'package:provider/provider.dart';
-
 import '../../../providers/auth_provider.dart';
 import '../../../providers/profile_provider.dart';
 import '../../auth/widgets/global_text_fields.dart';
-import '../widget/product_shimmer.dart';
+import '../widget/global_shimmer.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class ProfileScreenClient extends StatefulWidget {
+  const ProfileScreenClient({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfileScreenClient> createState() => _ProfileScreenClientState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenClientState extends State<ProfileScreenClient> {
   @override
   Widget build(BuildContext context) {
     User? user = context.watch<ProfileProvider>().currentUser;
@@ -26,59 +27,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: const Text("Profile"),
         actions: [
           IconButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (context) => AlertDialog(
-                    title: const Text("Close your account ?"),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.deepPurpleAccent),
-                        child: const Text(
-                          "Close",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
+            onPressed: () {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => AlertDialog(
+                  title: const Text("Close your account ?"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: AppColors.globalPassive,
+                      ),
+                      child: Text(
+                        "Close",
+                        style: TextStyle(
+                          color: AppColors.white,
                         ),
                       ),
-                      TextButton(
-                        onPressed: () async {
-                          context.read<AuthProvider>().logOut(context);
-                          Navigator.pop(context);
-                          context.read<ProfileProvider>().nameController.clear();
-                          context.read<ProfileProvider>().emailController.clear();
-                        },
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.redAccent),
-                        child: const Text(
-                          "Log out",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        context.read<AuthProvider>().logOut(context);
+                        Navigator.pop(context);
+                        context.read<ProfileProvider>().nameController.clear();
+                        context.read<ProfileProvider>().emailController.clear();
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: AppColors.deleteColor,
+                      ),
+                      child: Text(
+                        "Log out",
+                        style: TextStyle(
+                          color: AppColors.white,
                         ),
                       ),
-                    ],
-                  ),
-                );
-              },
-              icon: const Icon(Icons.logout))
+                    ),
+                  ],
+                ),
+              );
+            },
+            icon: const Icon(Icons.logout),
+          )
         ],
       ),
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: ListView(
               children: [
                 CircleAvatar(
-                  radius: 40,
+                  radius: 40.r,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(60.0),
+                    borderRadius: BorderRadius.circular(60.r),
                     child: user!.photoURL!.isNotEmpty
                         ? CachedNetworkImage(
                             imageUrl: "${user.photoURL}",
@@ -86,36 +90,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           )
                         : Image.asset(
                             "assets/images/logo.png",
-                            width: 80,
-                            height: 80,
+                            width: 80.w,
+                            height: 80.h,
                           ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 Center(
                   child: Text(
                     user.displayName ?? "Not found!",
-                    style: const TextStyle(
-                      fontSize: 24,
-                      color: Colors.deepPurple,
+                    style: TextStyle(
+                      fontSize: 24.sp,
+                      color: AppColors.globalActive,
                     ),
                   ),
                 ),
                 Center(
                   child: Text(
                     user.email ?? "Empty",
-                    style: const TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey,
+                    style: TextStyle(
+                      fontSize: 15.sp,
+                      color: AppColors.passiveText,
                     ),
                   ),
                 ),
                 Center(
                   child: Text(
                     user.phoneNumber ?? "Not found!",
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: AppColors.passiveText,
                     ),
                   ),
                 ),
@@ -137,7 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   title: '',
                   obscureText: false,
                 ),
-                const SizedBox(height: 70),
+                SizedBox(height: 70.h),
                 GlobalButton(
                   text: "Update",
                   onTap: () {
@@ -154,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             visible: context.watch<ProfileProvider>().isLoading,
             child: const Align(
               alignment: Alignment.bottomCenter,
-              child: LoadData(),
+              child: Loading(),
             ),
           ),
         ],

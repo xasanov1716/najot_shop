@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:najot_shop/utils/app_colors.dart';
 
 class AuthProvider with ChangeNotifier {
   final TextEditingController passwordController = TextEditingController();
@@ -122,9 +123,12 @@ class AuthProvider with ChangeNotifier {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(error),
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: AppColors.globalPassive,
         duration: const Duration(seconds: 7),
-        action: SnackBarAction(label: "Ok", onPressed: (){}),
+        action: SnackBarAction(
+          label: "Ok",
+          onPressed: () {},
+        ),
       ),
     );
     isLoading = false;

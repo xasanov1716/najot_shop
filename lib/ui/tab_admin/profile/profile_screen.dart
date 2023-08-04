@@ -128,15 +128,6 @@ class _ProfileScreenAdminState extends State<ProfileScreenAdmin> {
                   title: '',
                   obscureText: false,
                 ),
-                GlobalTextField(
-                  hintText: "Email",
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  textAlign: TextAlign.start,
-                  controller: context.read<ProfileProvider>().emailController,
-                  title: '',
-                  obscureText: false,
-                ),
                 const SizedBox(height: 70),
                 GlobalButton(
                   text: "Update",
@@ -144,7 +135,6 @@ class _ProfileScreenAdminState extends State<ProfileScreenAdmin> {
                     context
                         .read<ProfileProvider>()
                         .updateUserDisplayName(context);
-                    context.read<ProfileProvider>().updateEmail(context);
                   },
                 )
               ],

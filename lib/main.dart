@@ -11,6 +11,7 @@ import 'package:najot_shop/providers/profile_provider.dart';
 import 'package:najot_shop/providers/tab_provider.dart';
 import 'package:najot_shop/providers/tab_provider_admin.dart';
 import 'package:najot_shop/splash/splash_screen.dart';
+import 'package:najot_shop/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -28,7 +29,9 @@ Future<void> main() async {
           lazy: true,
         ),
         ChangeNotifierProvider(
-          create: (context) => ProductsProvider(productsService: ProductsService()),
+          create: (context) => ProductsProvider(
+            productsService: ProductsService(),
+          ),
           lazy: true,
         ),
         ChangeNotifierProvider(
@@ -42,7 +45,9 @@ Future<void> main() async {
           lazy: true,
         ),
         ChangeNotifierProvider(
-          create: (context) => CategoryProvider(categoryService: CategoryService()),
+          create: (context) => CategoryProvider(
+            categoryService: CategoryService(),
+          ),
           lazy: true,
         ),
       ],
@@ -65,12 +70,13 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           home: child,
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true
+            colorScheme:
+                ColorScheme.fromSeed(seedColor: AppColors.globalActive),
+            useMaterial3: true,
           ),
         );
       },
-      child: SplashScreen(),
+      child: const SplashScreen(),
     );
   }
 }

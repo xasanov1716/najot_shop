@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:najot_shop/ui/auth/pages/login_page.dart';
 import 'package:najot_shop/ui/auth/pages/signup_page.dart';
+import 'package:najot_shop/utils/app_colors.dart';
 import 'package:provider/provider.dart';
-
 import '../../providers/auth_provider.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -18,20 +19,6 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   // backgroundColor: Colors.white,
-      //   centerTitle: true,
-      //   title: Text(
-      //     isLoginPage ? "Login" : "Sign Up",
-      //     style: const TextStyle(
-      //       color: Colors.deepPurpleAccent,
-      //       fontSize: 25,
-      //       fontWeight: FontWeight.w500,
-      //     ),
-      //   ),
-      // ),
       body: Stack(
         children: [
           isLoginPage
@@ -54,9 +41,9 @@ class _AuthScreenState extends State<AuthScreen> {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: LinearProgressIndicator(
-                color: Colors.deepPurpleAccent,
-                backgroundColor: Colors.deepPurple.withOpacity(0.3),
-                minHeight: 10,
+                color: AppColors.globalPassive,
+                backgroundColor: AppColors.globalActive.withOpacity(0.3),
+                minHeight: 10.h,
               ),
             ),
           )

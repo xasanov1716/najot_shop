@@ -88,7 +88,7 @@ class ProductModel {
       productName: $productName,
       description: $description,
       createdAt: $createdAt,
-      currency: $currency
+      currency: $currency,
       ''';
   }
 }

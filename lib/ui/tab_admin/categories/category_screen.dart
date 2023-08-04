@@ -2,11 +2,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:najot_shop/ui/tab_admin/categories/update_category.dart';
+import 'package:najot_shop/ui/tab_client/widget/global_shimmer.dart';
 import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/models/category_model.dart';
 import '../../../providers/category_provider.dart';
-import '../../tab_client/widget/product_shimmer.dart';
 import 'add_category.dart';
 
 class CategoryScreenAdmin extends StatefulWidget {
@@ -68,8 +69,18 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
                                   backgroundColor: Colors.red,
                                   icon: Icons.delete,
                                   spacing: 10,
-                                  label: 'Delete',
                                 ),
+                                SizedBox(width: 15,),
+                                SlidableAction(
+                                  onPressed: (context) {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdatePage()));
+                                  },
+                                  borderRadius: BorderRadius.circular(15),
+                                  backgroundColor: Colors.green,
+                                  icon: Icons.edit,
+                                  spacing: 10,
+                                ),
+                                SizedBox(width: 14,)
                               ],
                             ),
                             child: Container(
@@ -131,7 +142,7 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
               child: Text(snapshot.error.toString()),
             );
           }
-          return const Center(child: LoadData());
+          return const Center(child: Loading());
         },
       ),
     );

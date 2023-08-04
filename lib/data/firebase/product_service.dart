@@ -31,7 +31,9 @@ class ProductsService {
       await FirebaseFirestore.instance
           .collection("products")
           .doc(productModel.productId)
-          .update(productModel.toJson());
+          .update(
+            productModel.toJson(),
+          );
 
       return UniversalData(data: "Product updated!");
     } on FirebaseException catch (e) {
