@@ -7,9 +7,10 @@ import 'package:najot_shop/utils/app_colors.dart';
 import '../../../../data/models/products_data_model.dart';
 
 class ProductItemView extends StatelessWidget {
-  const ProductItemView({super.key, required this.productModel});
+  const ProductItemView({super.key, required this.productModel, required this.index});
 
   final ProductModel productModel;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class ProductItemView extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ProductInfo(),
+                        builder: (context) =>  ProductDetailScreen(productModel: productModel, index: index),
                       ),
                     );
                   },
