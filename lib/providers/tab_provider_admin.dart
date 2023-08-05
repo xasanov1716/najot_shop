@@ -5,7 +5,7 @@ import '../ui/tab_admin/profile/profile_screen.dart';
 
 class TabAdminProvider with ChangeNotifier {
   List<Widget> screens = [
-    const ProductScreenAdmin(),
+    const ProductScreenClient(),
     const CategoryScreenAdmin(),
     const ProfileScreenAdmin(),
   ];
