@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:najot_shop/ui/tab_admin/categories/update_category.dart';
 import 'package:najot_shop/ui/tab_client/widget/global_shimmer.dart';
+import 'package:najot_shop/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/models/category_model.dart';
@@ -60,9 +60,12 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
                               children: [
                                 SlidableAction(
                                   onPressed: (context) {
-                                    context.read<CategoryProvider>().deleteCategory(
-                                        context: context,
-                                        categoryId: categoryModel.categoryId);
+                                    context
+                                        .read<CategoryProvider>()
+                                        .deleteCategory(
+                                            context: context,
+                                            categoryId:
+                                                categoryModel.categoryId);
                                     Navigator.pop(context);
                                   },
                                   borderRadius: BorderRadius.circular(15),
@@ -70,17 +73,21 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
                                   icon: Icons.delete,
                                   spacing: 10,
                                 ),
-                                SizedBox(width: 15,),
+                                const SizedBox(width: 15),
                                 SlidableAction(
                                   onPressed: (context) {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdatePage()));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const UpdatePage()));
                                   },
                                   borderRadius: BorderRadius.circular(15),
                                   backgroundColor: Colors.green,
                                   icon: Icons.edit,
                                   spacing: 10,
                                 ),
-                                SizedBox(width: 14,)
+                                const SizedBox(width: 14),
                               ],
                             ),
                             child: Container(
@@ -92,7 +99,8 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
                                 color: Colors.white,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
+                                    color: AppColors.globalPassive
+                                        .withOpacity(0.7),
                                     spreadRadius: 2,
                                     blurRadius: 5,
                                     offset: const Offset(0, 3),
@@ -105,7 +113,11 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(13),
                                     child: categoryModel.imageUrl.isNotEmpty
-                                        ? Image.network(categoryModel.imageUrl
+                                        ? Image.network(
+                                            categoryModel.imageUrl,
+                                            height: 100,
+                                            width: 110,
+                                            fit: BoxFit.cover,
                                           )
                                         : Image.asset("assets/images/logo.png",
                                             width: 120.w),

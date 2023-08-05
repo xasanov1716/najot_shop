@@ -107,6 +107,7 @@ class AuthProvider with ChangeNotifier {
       isLoading = false;
       notifyListeners();
     } on FirebaseAuthException catch (e) {
+      // ignore: use_build_context_synchronously
       manageMessage(context, e.code);
       if (e.code == 'weak-password') {
         debugPrint('The password provided is too weak.');
@@ -114,6 +115,7 @@ class AuthProvider with ChangeNotifier {
         debugPrint('The account already exists for that email.');
       }
     } catch (error) {
+      // ignore: use_build_context_synchronously
       manageMessage(context, error.toString());
     }
     await FirebaseAuth.instance.signInWithCredential(credential);

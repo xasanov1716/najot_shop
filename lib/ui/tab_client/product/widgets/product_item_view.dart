@@ -7,7 +7,8 @@ import 'package:najot_shop/utils/app_colors.dart';
 import '../../../../data/models/products_data_model.dart';
 
 class ProductItemView extends StatelessWidget {
-  const ProductItemView({super.key, required this.productModel, required this.index});
+  const ProductItemView(
+      {super.key, required this.productModel, required this.index});
 
   final ProductModel productModel;
   final int index;
@@ -43,7 +44,8 @@ class ProductItemView extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  ProductDetailScreen(productModel: productModel, index: index),
+                        builder: (context) => ProductDetailScreen(
+                            productModel: productModel, index: index),
                       ),
                     );
                   },
@@ -53,7 +55,7 @@ class ProductItemView extends StatelessWidget {
                       tag: productModel.productId,
                       child: CachedNetworkImage(
                         imageUrl: productModel.productImages[0],
-                        height: 150.h,
+                        height: 130.h,
                         width: 150.w,
                         fit: BoxFit.cover,
                       ),
@@ -62,12 +64,25 @@ class ProductItemView extends StatelessWidget {
                 ),
                 Positioned(
                   right: 0,
-                  bottom: 0,
+                  top: 0,
                   child: Container(
-                    color: Colors.white,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: const Icon(Icons.favorite),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(15),
+                        topLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      ),
+                      color: Colors.white,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Icon(
+                          Icons.favorite_border,
+                          color: AppColors.globalPassive,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -89,8 +104,9 @@ class ProductItemView extends StatelessWidget {
                 color: AppColors.black,
               ),
             ),
+            const Spacer(),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: GlobalButton(
                 text: "Add basket",
                 onTap: () {},

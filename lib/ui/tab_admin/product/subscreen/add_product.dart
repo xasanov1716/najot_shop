@@ -9,7 +9,6 @@ import '../../../../data/models/category_model.dart';
 import '../../../../data/models/products_data_model.dart';
 import '../../../../providers/category_provider.dart';
 import '../../../../providers/product_provider.dart';
-import '../../../../utils/app_colors.dart';
 import '../../../auth/widgets/global_button.dart';
 import '../../../auth/widgets/global_text_fields.dart';
 
@@ -157,12 +156,9 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                                           child: Center(
                                             child: Text(
                                               categoryModel.categoryName,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 20,
-                                                color: selectedCategoryId ==
-                                                        categoryModel.categoryId
-                                                    ? Colors.white
-                                                    : Colors.black,
+                                                color: Colors.white
                                               ),
                                             ),
                                           ),
@@ -212,13 +208,6 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                     ? "Add product"
                     : "Update product",
                 onTap: () {
-                  // if (imagePath != defaultConstatnsImages &&
-                  //     selectedCategoryId.isNotEmpty) {
-                  //   context.read<ProductsProvider>().addProduct(
-                  //         context: context,
-                  //         categoryId: selectedCategoryId,
-                  //         productCurrency: selectedCurrency,
-                  //       );
                   if (context
                           .read<ProductsProvider>()
                           .uploadedImagesUrls
@@ -272,12 +261,12 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
       builder: (BuildContext context) {
         return Container(
           padding: const EdgeInsets.all(24),
-          height: 200,
-          decoration: BoxDecoration(
-            color: Colors.deepPurple,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
+          height: 105,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(26),
+              topRight: Radius.circular(26),
             ),
           ),
           child: Column(
@@ -302,6 +291,7 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
       maxHeight: 512,
       maxWidth: 512,
     );
+    // ignore: use_build_context_synchronously
     await Provider.of<ProductsProvider>(context, listen: false)
         .uploadProductImages(
       context: context,
