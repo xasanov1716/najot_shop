@@ -38,6 +38,7 @@ class GetLoginWithButton extends StatelessWidget {
               img,
               width: 25.w,
               height: 25.h,
+              // ignore: deprecated_member_use
               color: AppColors.white,
             ),
             SizedBox(width: 10.w),

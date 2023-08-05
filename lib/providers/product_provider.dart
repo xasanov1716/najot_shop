@@ -265,17 +265,17 @@ class ProductsProvider with ChangeNotifier {
         productDesc.isNotEmpty &&
         priceText.isNotEmpty &&
         countText.isNotEmpty) {
-      ProductModel productModel = ProductModel(
-        count: int.parse(countText),
-        price: int.parse(priceText),
-        productImages: uploadedImagesUrls,
-        categoryId: categoryId,
-        productId: "",
-        productName: name,
-        description: productDesc,
-        createdAt: DateTime.now().toString(),
-        currency: productCurrency,
-      );
+      // ProductModel productModel = ProductModel(
+      //   count: int.parse(countText),
+      //   price: int.parse(priceText),
+      //   productImages: uploadedImagesUrls,
+      //   categoryId: categoryId,
+      //   productId: "",
+      //   productName: name,
+      //   description: productDesc,
+      //   createdAt: DateTime.now().toString(),
+      //   currency: productCurrency,
+      // );
     }
   }
 

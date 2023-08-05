@@ -5,8 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:najot_shop/ui/tab_admin/product/subscreen/add_product.dart';
 import 'package:najot_shop/ui/tab_client/widget/global_shimmer.dart';
 import 'package:provider/provider.dart';
-import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-
 import '../../../data/models/products_data_model.dart';
 import '../../../providers/product_provider.dart';
 import '../../../utils/app_colors.dart';
@@ -50,7 +48,7 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 0.63,
+                      childAspectRatio: 0.65,
                     ),
                     children: List.generate(
                       snapshot.data!.length,
@@ -60,12 +58,12 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
                           margin: EdgeInsets.all(10.sp),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20.r),
-                              color: AppColors.globalPassive,
+                              color: AppColors.white,
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.globalPassive,
-                                  spreadRadius: 2.r,
-                                  offset: const Offset(0, 0),
+                                  color: AppColors.globalPassive.withOpacity(0.5),
+                                  spreadRadius: 3.r,
+                                  offset: const Offset(0, 5),
                                   blurRadius: 10.r,
                                 )
                               ]),
@@ -75,8 +73,8 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
                                 child: CachedNetworkImage(
-                                  height: 100.h,
-                                  width: 150.h,
+                                  height: 110.h,
+                                  width: 160.h,
                                   fit: BoxFit.cover,
                                   imageUrl: productModel.productImages.first,
                                   placeholder: (context, url) =>
@@ -89,7 +87,7 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
                                 productModel.productName,
                                 style: TextStyle(
                                   fontSize: 24.sp,
-                                  color: Colors.white,
+                                  color: AppColors.globalActive,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
@@ -101,21 +99,21 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: 18.sp,
-                                        color: Colors.white,
+                                        color: AppColors.globalPassive,
                                         fontWeight: FontWeight.w500,),
                                   ),
                                   Text(
                                     "Price: ${productModel.price} ${productModel.currency}",
                                     style: TextStyle(
                                         fontSize: 18.sp,
-                                        color: Colors.white,
+                                        color: AppColors.globalPassive,
                                         fontWeight: FontWeight.w500,),
                                   ),
                                   Text(
                                     "Count: ${productModel.count}",
                                     style: TextStyle(
                                         fontSize: 18.sp,
-                                        color: Colors.white,
+                                        color: AppColors.globalPassive,
                                         fontWeight: FontWeight.w500,),
                                   ),
                                 ],
@@ -123,24 +121,6 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return ProductAddScreen(
-                                              productModel: productModel,
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    icon: const Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
-                                    ),
-                                  ),
                                   IconButton(
                                     onPressed: () {
                                       showDialog(
@@ -184,6 +164,24 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
                                     icon: const Icon(
                                       Icons.delete,
                                       color: Colors.red,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return ProductAddScreen(
+                                              productModel: productModel,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.edit,
+                                      color: AppColors.globalPassive,
                                     ),
                                   ),
                                 ],
