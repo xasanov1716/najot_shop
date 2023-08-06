@@ -114,7 +114,14 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
                           ],
                         ),
                       )
-                    : const Center(child: Text("Product Empty!"));
+                    : const Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SizedBox(height: 240),
+                          Center(child: Text("Product Empty!")),
+                          SizedBox(height: 100),
+                        ],
+                      );
               }
               if (snapshot.hasError) {
                 return Center(

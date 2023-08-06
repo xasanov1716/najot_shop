@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../../data/models/products_data_model.dart';
 import '../../../providers/product_provider.dart';
 import '../../../utils/app_colors.dart';
+import '../../tab_client/product/product_datail_screen.dart';
 
 class ProductScreenAdmin extends StatefulWidget {
   const ProductScreenAdmin({super.key});
@@ -61,7 +62,8 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
                               color: AppColors.white,
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.globalPassive.withOpacity(0.5),
+                                  color:
+                                      AppColors.globalPassive.withOpacity(0.5),
                                   spreadRadius: 3.r,
                                   offset: const Offset(0, 5),
                                   blurRadius: 10.r,
@@ -70,17 +72,30 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
                           child: Column(
                             children: [
                               const SizedBox(height: 10),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: CachedNetworkImage(
-                                  height: 110.h,
-                                  width: 160.h,
-                                  fit: BoxFit.cover,
-                                  imageUrl: productModel.productImages.first,
-                                  placeholder: (context, url) =>
-                                      const Loading(),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProductDetailScreen(
+                                        productModel: productModel,
+                                        index: index,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: CachedNetworkImage(
+                                    height: 110.h,
+                                    width: 160.h,
+                                    fit: BoxFit.cover,
+                                    imageUrl: productModel.productImages.first,
+                                    placeholder: (context, url) =>
+                                        const Loading(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                  ),
                                 ),
                               ),
                               Text(
@@ -98,64 +113,89 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
                                     productModel.description,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                        fontSize: 18.sp,
-                                        color: AppColors.globalPassive,
-                                        fontWeight: FontWeight.w500,),
+                                      fontSize: 18.sp,
+                                      color: AppColors.globalPassive,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                   Text(
                                     "Price: ${productModel.price} ${productModel.currency}",
                                     style: TextStyle(
-                                        fontSize: 18.sp,
-                                        color: AppColors.globalPassive,
-                                        fontWeight: FontWeight.w500,),
+                                      fontSize: 18.sp,
+                                      color: AppColors.globalPassive,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                   Text(
                                     "Count: ${productModel.count}",
                                     style: TextStyle(
-                                        fontSize: 18.sp,
-                                        color: AppColors.globalPassive,
-                                        fontWeight: FontWeight.w500,),
+                                      fontSize: 18.sp,
+                                      color: AppColors.globalPassive,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ],
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   IconButton(
                                     onPressed: () {
                                       showDialog(
                                         context: context,
-                                        builder: (BuildContext context) => AlertDialog(
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
                                           backgroundColor: Colors.white,
-                                          content: const Padding(
-                                            padding: EdgeInsets.only(top: 10),
+                                          content: Padding(
+                                            padding: EdgeInsets.only(top: 10.h),
                                             child: Text(
-                                              "Delete Product",
+                                              "Delete Product ?",
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 24.sp,
+                                                color: Colors.black,
+                                              ),
                                             ),
                                           ),
                                           actions: [
-                                            CupertinoDialogAction(
-                                              onPressed: () {
-                                                context
-                                                    .read<ProductsProvider>()
-                                                    .deleteProduct(
-                                                  context: context,
-                                                  productId: productModel.productId,
-                                                );
-                                                Navigator.of(context).pop();
-                                              },
-                                              isDefaultAction: true,
-                                              child: const Text("ok"),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.globalPassive
+                                                      .withOpacity(0.3),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
+                                              child: CupertinoDialogAction(
+                                                onPressed: () {
+                                                  context
+                                                      .read<ProductsProvider>()
+                                                      .deleteProduct(
+                                                        context: context,
+                                                        productId: productModel
+                                                            .productId,
+                                                      );
+                                                  Navigator.of(context).pop();
+                                                },
+                                                isDefaultAction: true,
+                                                child: const Text("ok"),
+                                              ),
                                             ),
-                                            CupertinoDialogAction(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              isDefaultAction: true,
-                                              child: const Text("cancel"),
+                                            SizedBox(height: 10.h),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.globalPassive
+                                                      .withOpacity(0.3),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
+                                              child: CupertinoDialogAction(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                isDefaultAction: true,
+                                                child: const Text("cancel"),
+                                              ),
                                             ),
                                           ],
                                         ),
