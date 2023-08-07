@@ -1,14 +1,12 @@
 class CategoryModel {
   String categoryId;
   String categoryName;
-  String description;
   String imageUrl;
   String createdAt;
 
   CategoryModel({
     required this.categoryId,
     required this.categoryName,
-    required this.description,
     required this.imageUrl,
     required this.createdAt,
   });
@@ -23,7 +21,6 @@ class CategoryModel {
     return CategoryModel(
       categoryId: categoryId ?? this.categoryId,
       categoryName: categoryName ?? this.categoryName,
-      description: description ?? this.description,
       imageUrl: imageUrl ?? this.imageUrl,
       createdAt: createdAt ?? this.createdAt,
     );
@@ -33,7 +30,6 @@ class CategoryModel {
     return CategoryModel(
       categoryId: jsonData['categoryId'] as String? ?? "",
       categoryName: jsonData['categoryName'] as String? ?? '',
-      description: jsonData['description'] as String? ?? '',
       imageUrl: jsonData['imageUrl'] as String? ?? '',
       createdAt: jsonData['createdAt'] as String? ?? '',
     );
@@ -43,7 +39,6 @@ class CategoryModel {
     return {
       'categoryId': categoryId,
       'categoryName': categoryName,
-      'description': description,
       'imageUrl': imageUrl,
       'createdAt': createdAt,
     };
@@ -54,7 +49,6 @@ class CategoryModel {
     return ''''
        categoryId : $categoryId,
        categoryName : $categoryName,
-       description : $description,
        imageUrl : $imageUrl,
        createdAt : $createdAt, 
       ''';

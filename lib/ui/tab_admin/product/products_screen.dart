@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:najot_shop/ui/tab_admin/product/subscreen/add_product.dart';
+import 'package:najot_shop/ui/tab_admin/product/subscreen/update_product.dart';
 import 'package:najot_shop/ui/tab_client/widget/global_shimmer.dart';
+import 'package:najot_shop/utils/app_images.dart';
 import 'package:provider/provider.dart';
 import '../../../data/models/products_data_model.dart';
 import '../../../providers/product_provider.dart';
@@ -40,7 +42,7 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
         ],
       ),
       body: StreamBuilder<List<ProductModel>>(
-        stream: context.read<ProductsProvider>().getProductsBbyCategory(),
+        stream: context.read<ProductsProvider>().getProductsByCategory(),
         builder:
             (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData) {
@@ -74,15 +76,15 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
                               const SizedBox(height: 10),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ProductDetailScreen(
-                                        productModel: productModel,
-                                        index: index,
-                                      ),
-                                    ),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => ProductDetailScreen(
+                                  //       productModel: productModel,
+                                  //       index: index,
+                                  //     ),
+                                  //   ),
+                                  // );
                                 },
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(16),
@@ -212,9 +214,7 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) {
-                                            return ProductAddScreen(
-                                              productModel: productModel,
-                                            );
+                                            return ProductUpdateScreen(productModel: productModel);
                                           },
                                         ),
                                       );
@@ -246,7 +246,7 @@ class _ProductScreenAdminState extends State<ProductScreenAdmin> {
               child: Text(snapshot.error.toString()),
             );
           }
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: Loading());
         },
       ),
     );

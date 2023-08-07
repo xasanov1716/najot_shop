@@ -8,7 +8,7 @@ class FileUploader {
     String downloadUrl = "";
     try {
       final storageRef = FirebaseStorage.instance.ref();
-      var imageRef = storageRef.child("images/profileImages/${xFile.name}");
+      var imageRef = storageRef.child("images/profileImages/$xFile");
       await imageRef.putFile(File(xFile.path));
       downloadUrl = await imageRef.getDownloadURL();
 

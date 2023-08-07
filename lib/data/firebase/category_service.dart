@@ -29,6 +29,7 @@ class CategoryService {
 
   Future<UniversalData> updateCategory(
       {required CategoryModel categoryModel}) async {
+    print(categoryModel.categoryName);
     try {
       await FirebaseFirestore.instance
           .collection("categories")

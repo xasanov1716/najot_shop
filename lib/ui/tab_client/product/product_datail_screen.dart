@@ -1,9 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:najot_shop/data/notification_service.dart';
 import 'package:najot_shop/utils/app_colors.dart';
+import 'package:provider/provider.dart';
+import '../../../data/models/order_model.dart';
 import '../../../data/models/products_data_model.dart';
+import '../../../providers/order_provider.dart';
+import '../../auth/widgets/global_button.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen(
@@ -128,7 +134,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        if (count > 1) {
+                        if (count > 0) {
                           setState(() {
                             count--;
                             widget.productModel.count++;
@@ -149,7 +155,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        if ((count + 1) <= widget.productModel.count) {
+                        if (0 != widget.productModel.count) {
                           setState(() {
                             count++;
                             widget.productModel.count--;
@@ -160,6 +166,29 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                   ],
                 ),
+                SizedBox(height: 30.h),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: GlobalButton(
+                    text: "Add basket",
+                      onTap: () {
+                        Provider.of<OrderProvider>(context, listen: false).addOrder(
+                          context: context,
+                          orderModel: OrderModel(
+                            count: count,
+                            totalPrice: widget.productModel.price * count,
+                            orderId: "",
+                            productId: widget.productModel.productId,
+                            userId: FirebaseAuth.instance.currentUser!.uid,
+                            orderStatus: "ordered",
+                            createdAt: DateTime.now().toString(),
+                            productName: widget.productModel.productName,
+                          ),
+                        );
+                        NotificationService.instance.showNotification(widget.productModel.productName);
+                      },
+                  ),
+                )
               ],
             ),
           ),

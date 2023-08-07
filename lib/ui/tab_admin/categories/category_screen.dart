@@ -5,8 +5,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:najot_shop/ui/tab_admin/categories/update_category.dart';
 import 'package:najot_shop/ui/tab_client/widget/global_shimmer.dart';
 import 'package:najot_shop/utils/app_colors.dart';
+import 'package:najot_shop/utils/app_images.dart';
 import 'package:provider/provider.dart';
-import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/models/category_model.dart';
 import '../../../providers/category_provider.dart';
 import 'add_category.dart';
@@ -18,9 +18,9 @@ class CategoryScreenAdmin extends StatefulWidget {
   State<CategoryScreenAdmin> createState() => _CategoryScreenAdminState();
 }
 
-List<CategoryModel>? categoryModels;
-String isError = "";
-bool isLoading = false;
+// List<CategoryModel>? categoryModels;
+// String isError = "";
+// bool isLoading = false;
 
 class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
   @override
@@ -34,7 +34,7 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AddPage(),
+                  builder: (context) => AddPage(),
                 ),
               );
             },
@@ -62,9 +62,9 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
                                   context
                                       .read<CategoryProvider>()
                                       .deleteCategory(
-                                          context: context,
-                                          categoryId:
-                                              categoryModel.categoryId);
+                                        context: context,
+                                        categoryId: categoryModel.categoryId,
+                                      );
                                 },
                                 borderRadius: BorderRadius.circular(15),
                                 backgroundColor: Colors.red,
@@ -73,10 +73,11 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
                               SlidableAction(
                                 onPressed: (context) {
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const UpdatePage()));
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => UpdatePage(categoryModel: categoryModel),
+                                    ),
+                                  );
                                 },
                                 borderRadius: BorderRadius.circular(15),
                                 backgroundColor: Colors.green,
@@ -93,8 +94,8 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
                               color: Colors.white,
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.globalPassive
-                                      .withOpacity(0.7),
+                                  color:
+                                      AppColors.globalPassive.withOpacity(0.7),
                                   spreadRadius: 2,
                                   blurRadius: 5,
                                   offset: const Offset(0, 3),
@@ -109,12 +110,14 @@ class _CategoryScreenAdminState extends State<CategoryScreenAdmin> {
                                   child: categoryModel.imageUrl.isNotEmpty
                                       ? CachedNetworkImage(
                                           imageUrl: categoryModel.imageUrl,
-                                          height: 100,
-                                          width: 110,
+                                          height: 100.h,
+                                          width: 110.w,
                                           fit: BoxFit.cover,
                                         )
-                                      : Image.asset("assets/images/logo.png",
-                                          width: 120.w),
+                                      : Image.asset(
+                                          AppImages.logo,
+                                          width: 120.w,
+                                        ),
                                 ),
                                 const Spacer(),
                                 Text(
