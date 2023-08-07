@@ -25,6 +25,10 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (context) => OrderProvider(orderService: OrderService()),
+          lazy: true,
+        ),
+        ChangeNotifierProvider(
           create: (context) => AuthProvider(),
           lazy: true,
         ),

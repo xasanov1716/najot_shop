@@ -192,6 +192,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ],
             ),
           ),
+          GlobalButton(onTap: (){
+            Provider.of<OrderProvider>(context, listen: false).addOrder(
+              context: context,
+              orderModel: OrderModel(
+                count: count,
+                totalPrice: widget.productModel.price * count,
+                orderId: "",
+                productId: widget.productModel.productId,
+                userId: FirebaseAuth.instance.currentUser!.uid,
+                orderStatus: "ordered",
+                createdAt: DateTime.now().toString(),
+                productName: widget.productModel.productName,
+              ),
+            );
+          },text: "Add to Card",),
+          SizedBox(height: 16,)
         ],
       ),
     );

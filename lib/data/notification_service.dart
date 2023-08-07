@@ -33,8 +33,7 @@ class NotificationService {
 
     tz.initializeTimeZones();
   }
-
-  void showNotification(String name) {
+ void showNotification(String name) {
     flutterLocalNotificationsPlugin.show(
       Random().nextInt(100),
       'Najot shop',
