@@ -83,7 +83,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     style: TextStyle(
                       fontSize: 22.spMin,
                       color: AppColors.globalPassive,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -114,7 +114,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 Padding(
                   padding: EdgeInsets.all(24.sp),
                   child: Text(
-                    "Total price: ${widget.productModel.price * count}.[${widget.productModel.currency}]",
+                    "Total price: ${widget.productModel.price * count} ${widget.productModel.currency}",
                     style: TextStyle(
                       fontSize: 18,
                       color: AppColors.globalPassive,
@@ -131,6 +131,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         if (count > 1) {
                           setState(() {
                             count--;
+                            widget.productModel.count++;
                           });
                         }
                       },
@@ -151,6 +152,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         if ((count + 1) <= widget.productModel.count) {
                           setState(() {
                             count++;
+                            widget.productModel.count--;
                           });
                         }
                       },
