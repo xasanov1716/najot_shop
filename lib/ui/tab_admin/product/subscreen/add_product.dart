@@ -1,7 +1,11 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:najot_shop/ui/tab_client/categories/category_client_screen.dart';
+import 'package:najot_shop/ui/tab_client/widget/global_shimmer.dart';
 import 'package:najot_shop/utils/constants.dart';
 import 'package:provider/provider.dart';
 
@@ -127,7 +131,7 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                       if (snapshot.hasData) {
                         return snapshot.data!.isNotEmpty
                             ? SizedBox(
-                                height: 100,
+                                height: 50,
                                 child: ListView(
                                   scrollDirection: Axis.horizontal,
                                   children: List.generate(
@@ -149,20 +153,18 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                                             color: selectedCategoryId ==
                                                     categoryModel.categoryId
                                                 ? Colors.deepPurpleAccent
+                                                    .withOpacity(0.6)
                                                 : Colors.deepPurple,
                                           ),
                                           height: 100,
-                                          margin: const EdgeInsets.all(16),
-                                          padding: const EdgeInsets.all(16),
+                                          // margin: const EdgeInsets.all(16),
+                                          padding: const EdgeInsets.all(5),
                                           child: Center(
                                             child: Text(
                                               categoryModel.categoryName,
                                               style: TextStyle(
                                                 fontSize: 20,
-                                                color: selectedCategoryId ==
-                                                        categoryModel.categoryId
-                                                    ? Colors.white
-                                                    : Colors.black,
+                                                color: AppColors.white,
                                               ),
                                             ),
                                           ),
@@ -179,19 +181,21 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                           child: Text(snapshot.error.toString()),
                         );
                       }
-                      return const Center(child: CircularProgressIndicator());
+                      return const Center(child: Loading());
                     },
                   ),
                   const SizedBox(height: 24),
-                  SizedBox(
+                  Container(
                     width: 150,
                     height: 150,
+                    color: AppColors.white,
                     child: TextButton(
                       onPressed: () {
                         showBottomSheetDialog();
                       },
                       style: TextButton.styleFrom(
-                          backgroundColor: Theme.of(context).indicatorColor),
+                        backgroundColor: Theme.of(context).indicatorColor,
+                      ),
                       child: imagePath == defaultConstantsImages
                           ? Text(
                               imagePath,
@@ -199,7 +203,15 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             )
-                          : Image.file(File(imagePath)),
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(13),
+                              child: CachedNetworkImage(
+                                imageUrl: widget.productModel!.productImages.first,
+                                height: 100,
+                                width: 110,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -212,13 +224,6 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                     ? "Add product"
                     : "Update product",
                 onTap: () {
-                  // if (imagePath != defaultConstatnsImages &&
-                  //     selectedCategoryId.isNotEmpty) {
-                  //   context.read<ProductsProvider>().addProduct(
-                  //         context: context,
-                  //         categoryId: selectedCategoryId,
-                  //         productCurrency: selectedCurrency,
-                  //       );
                   if (context
                           .read<ProductsProvider>()
                           .uploadedImagesUrls
@@ -272,12 +277,12 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
       builder: (BuildContext context) {
         return Container(
           padding: const EdgeInsets.all(24),
-          height: 200,
+          height: 120.h,
           decoration: BoxDecoration(
-            color: Colors.deepPurple,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
+            color: AppColors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(26.r),
+              topRight: Radius.circular(26.r),
             ),
           ),
           child: Column(
@@ -302,6 +307,7 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
       maxHeight: 512,
       maxWidth: 512,
     );
+    // ignore: use_build_context_synchronously
     await Provider.of<ProductsProvider>(context, listen: false)
         .uploadProductImages(
       context: context,

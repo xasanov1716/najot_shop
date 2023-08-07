@@ -1,11 +1,9 @@
-import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:najot_shop/utils/app_colors.dart';
 import 'package:najot_shop/utils/app_images.dart';
 import 'package:provider/provider.dart';
-import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../data/models/category_model.dart';
 import '../../../providers/category_provider.dart';
 import '../widget/global_shimmer.dart';

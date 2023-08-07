@@ -97,7 +97,7 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            childAspectRatio: 0.6,
+                            childAspectRatio: 0.7,
                           ),
                           children: [
                             ...List.generate(
@@ -114,7 +114,14 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
                           ],
                         ),
                       )
-                    : const Center(child: Text("Product Empty!"));
+                    : const Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SizedBox(height: 240),
+                          Center(child: Text("Product Empty!")),
+                          SizedBox(height: 100),
+                        ],
+                      );
               }
               if (snapshot.hasError) {
                 return Center(

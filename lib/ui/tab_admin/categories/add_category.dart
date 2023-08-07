@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:najot_shop/ui/auth/widgets/global_button.dart';
 import 'package:najot_shop/ui/auth/widgets/global_text_fields.dart';
@@ -30,7 +28,7 @@ class _AddPageState extends State<AddPage> {
     );
 
     if (xFile != null) {
-      print("VBNKM<");
+      // ignore: use_build_context_synchronously
       await Provider.of<CategoryProvider>(context,listen: false)
           .uploadCategoryImage(context, xFile);
 
@@ -44,6 +42,7 @@ class _AddPageState extends State<AddPage> {
       maxWidth: 512,
     );
     if (xFile != null) {
+      // ignore: use_build_context_synchronously
       await Provider.of<CategoryProvider>(context,listen: false)
           .uploadCategoryImage(context, xFile);
     }
