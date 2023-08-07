@@ -13,17 +13,16 @@ import '../../../../utils/app_colors.dart';
 import '../../../auth/widgets/global_button.dart';
 import '../../../auth/widgets/global_text_fields.dart';
 
-// ignore: must_be_immutable
-class ProductAddScreen extends StatefulWidget {
-  ProductAddScreen({super.key, this.productModel});
+class ProductUpdateScreen extends StatefulWidget {
+  const ProductUpdateScreen({super.key, required this.productModel});
 
-  ProductModel? productModel;
+  final ProductModel productModel;
 
   @override
-  State<ProductAddScreen> createState() => _ProductAddScreenState();
+  State<ProductUpdateScreen> createState() => _ProductUpdateScreenState();
 }
 
-class _ProductAddScreenState extends State<ProductAddScreen> {
+class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
   ImagePicker picker = ImagePicker();
   String imagePath = defaultConstantsImages;
   String currency = "";
@@ -42,8 +41,7 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-              widget.productModel == null ? "Product Add" : "Product Update"),
+          title: const Text("Product Update"),
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back,
@@ -150,9 +148,9 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                                                     BorderRadius.circular(16),
                                                 color: selectedCategoryId ==
                                                         categoryModel.categoryId
-                                                    ? Colors.deepPurpleAccent
+                                                    ? AppColors.globalActive
                                                         .withOpacity(0.6)
-                                                    : Colors.deepPurple,
+                                                    : AppColors.globalActive,
                                               ),
                                               height: 100,
                                               // margin: const EdgeInsets.all(16),
@@ -208,7 +206,7 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
                               borderRadius: BorderRadius.circular(13),
                               child: CachedNetworkImage(
                                 imageUrl:
-                                    widget.productModel!.productImages.first,
+                                    widget.productModel.productImages.first,
                                 height: 100,
                                 width: 110,
                                 fit: BoxFit.cover,
@@ -222,13 +220,13 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
             ),
             const SizedBox(height: 10),
             GlobalButton(
-              text: "Add product",
+              text: "Update product",
               onTap: () {
-                context.read<ProductsProvider>().addProduct(
-                  context: context,
-                  categoryId: selectedCategoryId,
-                  productCurrency: selectedCurrency,
-                );
+                context.read<ProductsProvider>().updateProduct(
+                      context: context,
+                      imagePath: widget.productModel.productImages.first,
+                      productModel: widget.productModel,
+                    );
               },
             ),
             const SizedBox(height: 10)
@@ -258,6 +256,7 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
               ListTile(
                 onTap: () {
                   _getFromGallery();
+                  Navigator.pop(context);
                 },
                 leading: const Icon(Icons.photo),
                 title: const Text("Select from Gallery"),
@@ -268,7 +267,6 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
       },
     );
   }
-
   Future<void> _getFromGallery() async {
     List<XFile> xFiles = await picker.pickMultiImage(
       maxHeight: 512,

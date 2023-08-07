@@ -41,20 +41,31 @@ class CategoryProvider with ChangeNotifier {
   Future<void> updateCategory({
     required BuildContext context,
     required CategoryModel categoryModel,
+    required String image,
   }) async {
-    showLoading(context: context);
-    UniversalData universalData =
-        await categoryService.updateCategory(categoryModel: categoryModel);
-    if (context.mounted) {
-      hideLoading(dialogContext: context);
-    }
-    if (universalData.error.isEmpty) {
+
+    if (categoryModel.categoryName.isNotEmpty) {
+      showLoading(context: context);
+      UniversalData universalData = await categoryService.updateCategory(
+          categoryModel: CategoryModel(
+        categoryId: categoryModel.categoryId,
+        categoryName: nameController.text,
+        imageUrl: image,
+
+        createdAt: categoryModel.createdAt,
+      ));
       if (context.mounted) {
-        showMessage(context, universalData.data as String);
+        hideLoading(dialogContext: context);
       }
-    } else {
-      if (context.mounted) {
-        showMessage(context, universalData.error);
+      if (universalData.error.isEmpty) {
+        if (context.mounted) {
+          showMessage(context, universalData.data as String);
+          Navigator.pop(context);
+        }
+      } else {
+        if (context.mounted) {
+          showMessage(context, universalData.error);
+        }
       }
     }
   }

@@ -42,7 +42,6 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
                             CategoryItemView(
                               categoryModel: CategoryModel(
                                 categoryId: "",
-                                description: "",
                                 categoryName: "All",
                                 imageUrl: "",
                                 createdAt: "",
@@ -74,14 +73,14 @@ class _ProductScreenClientState extends State<ProductScreenClient> {
                           ],
                         ),
                       )
-                    : const Center(child: Text("Empty!"));
+                    : const Center(child: Text(""));
               }
               if (snapshot.hasError) {
                 return Center(
                   child: Text(snapshot.error.toString()),
                 );
               }
-              return const Center(child: Loading());
+              return const SizedBox();
             },
           ),
           StreamBuilder<List<ProductModel>>(

@@ -43,6 +43,12 @@ Future<void> main() async {
           lazy: true,
         ),
         ChangeNotifierProvider(
+          create: (context) => OrderProvider(
+            orderService: OrderService(),
+          ),
+          lazy: true,
+        ),
+        ChangeNotifierProvider(
           create: (context) => ProfileProvider(
             profileService: ProfileService(),
           ),

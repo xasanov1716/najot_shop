@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:flutter/cupertino.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -34,20 +33,19 @@ class NotificationService {
 
     tz.initializeTimeZones();
   }
-
-  void showNotification(String text) {
+ void showNotification(String name) {
     flutterLocalNotificationsPlugin.show(
       Random().nextInt(100),
-      'Flutter N8',
-      text,
+      'Najot shop',
+      '$name Added order',
       const NotificationDetails(
-        android: AndroidNotificationDetails('Nimadur', 'Nimadurde',
+        android: AndroidNotificationDetails('1', '2',
             importance: Importance.high,
             priority: Priority.max,
             fullScreenIntent: true,
             audioAttributesUsage: AudioAttributesUsage.alarm,
             actions: [
-              AndroidNotificationAction('1', 'Salom', inputs: [
+              AndroidNotificationAction('1', 'Send', inputs: [
                 AndroidNotificationActionInput(),
               ]),
             ]),

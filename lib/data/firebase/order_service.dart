@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../models/order/order_model.dart';
+import '../models/order_model.dart';
 import '../models/universal_data.dart';
 
 class OrderService {
@@ -24,7 +23,6 @@ class OrderService {
   }
 
   Future<UniversalData> updateOrder({required OrderModel orderModel}) async {
-    print("INSIDE UPDATE: ${orderModel.orderId}");
     try {
       await FirebaseFirestore.instance
           .collection("orders")

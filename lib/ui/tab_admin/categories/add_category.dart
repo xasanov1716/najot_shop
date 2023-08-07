@@ -10,12 +10,14 @@ import '../../../providers/category_provider.dart';
 import 'category_screen.dart';
 
 class AddPage extends StatefulWidget {
-  const AddPage({Key? key}) : super(key: key);
+  const AddPage({
+    Key? key,
+  }) : super(key: key);
+
 
   @override
   State<AddPage> createState() => _AddPageState();
 }
-
 class _AddPageState extends State<AddPage> {
   ImagePicker picker = ImagePicker();
   File? image;
@@ -29,9 +31,8 @@ class _AddPageState extends State<AddPage> {
 
     if (xFile != null) {
       // ignore: use_build_context_synchronously
-      await Provider.of<CategoryProvider>(context,listen: false)
+      await Provider.of<CategoryProvider>(context, listen: false)
           .uploadCategoryImage(context, xFile);
-
     }
   }
 
@@ -43,7 +44,7 @@ class _AddPageState extends State<AddPage> {
     );
     if (xFile != null) {
       // ignore: use_build_context_synchronously
-      await Provider.of<CategoryProvider>(context,listen: false)
+      await Provider.of<CategoryProvider>(context, listen: false)
           .uploadCategoryImage(context, xFile);
     }
   }
@@ -62,152 +63,111 @@ class _AddPageState extends State<AddPage> {
           icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Stack(
-                    children: [
-                      ZoomTapAnimation(
-                        onTap: () {
-                          _getFromGallery();
-                        },
-                        child: Container(
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.deepPurpleAccent.withOpacity(0.4),
+      body: StreamBuilder<List<CategoryModel>>(
+        stream: context.read<CategoryProvider>().getCategories(),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<CategoryModel>> snapshot) {
+          return Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ZoomTapAnimation(
+                      onTap: () {
+                        _getFromGallery();
+                      },
+                      child: Container(
+                        height: 80,
+                        width: 80,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.deepPurpleAccent.withOpacity(0.4),
+                        ),
+                        child: const Icon(Icons.image, size: 30),
+                      ),
+                    ),
+                    // ClipRRect(
+                    //   borderRadius: BorderRadius.circular(13),
+                    //   child: categoryModels?.first.imageUrl!=null
+                    //       ? CachedNetworkImage(
+                    //           imageUrl: categoryModels!.first.imageUrl,
+                    //           height: 100.h,
+                    //           width: 110.w,
+                    //           fit: BoxFit.cover,
+                    //         )
+                    //       : Image.asset(
+                    //           AppImages.logo,
+                    //           width: 120.w,
+                    //         ),
+                    // ),
+                    ZoomTapAnimation(
+                      onTap: () {
+                        _getFromCamera();
+                      },
+                      child: Container(
+                        height: 80,
+                        width: 80,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.deepPurpleAccent.withOpacity(0.4),
+                        ),
+                        child: const Icon(Icons.camera_alt, size: 30),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 32),
+                GlobalTextField(
+                  hintText: 'Enter name',
+                  keyboardType: TextInputType.name,
+                  textInputAction: TextInputAction.next,
+                  textAlign: TextAlign.start,
+                  controller: context.read<CategoryProvider>().nameController,
+                  title: 'Enter name',
+                ),
+                const SizedBox(height: 32),
+                GlobalButton(
+                    text: "Add",
+                    onTap: () {
+                      if (context
+                          .read<CategoryProvider>()
+                          .nameController
+                          .text
+                          .isNotEmpty) {
+                        context.read<CategoryProvider>().addCategory(
+                              context: context,
+                              categoryModel: CategoryModel(
+                                categoryId: "",
+                                categoryName: context
+                                    .read<CategoryProvider>()
+                                    .nameController
+                                    .text,
+                                imageUrl: context
+                                    .read<CategoryProvider>()
+                                    .categoryUrl,
+                                createdAt: DateTime.now().toString(),
+                              ),
+                            );
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CategoryScreenAdmin(),
                           ),
-                          child: const Icon(Icons.image, size: 30),
-                        ),
-                      ),
-                      // ClipRRect(borderRadius: BorderRadius.circular(32),child: Image(image: FileImage(File(context.read<CategoryProvider>().categoryUrl)),)),
-                      ZoomTapAnimation(
-                        onTap: () {
-                          _getFromGallery();
-                        },
-                        child: Container(
-                            height: 80,
-                            width: 80,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.deepPurpleAccent.withOpacity(0.4),
-                            ),
-                            child: image?.path!=null
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(50),
-                                    child: Image(
-                                      width: 80,
-                                      height: 80,
-                                      image: FileImage(
-                                        File(image!.path),
-                                      ),
-                                    ),
-                                  )
-                                : const Icon(Icons.image, size: 30)),
-                      ),
-                    ],
-                  ),
-                  Stack(
-                    children: [
-                      ZoomTapAnimation(
-                        onTap: () {
-                          _getFromCamera();
-                        },
-                        child: Container(
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.deepPurpleAccent.withOpacity(0.4),
-                          ),
-                          child: const Icon(Icons.camera_alt, size: 30),
-                        ),
-                      ),
-                      ZoomTapAnimation(
-                        onTap: () {
-                          _getFromCamera();
-                        },
-                        child: Container(
-                            height: 80,
-                            width: 80,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.deepPurpleAccent.withOpacity(0.4),
-                            ),
-                            child: image?.path!=null
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(50),
-                                    child: Image(
-                                      width: 80,
-                                      height: 80,
-                                      image: FileImage(
-                                        File(image!.path),
-                                      ),
-                                    ),
-                                  )
-                                : const Icon(Icons.camera_alt, size: 30)),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
-              GlobalTextField(
-                hintText: 'Enter name',
-                keyboardType: TextInputType.name,
-                textInputAction: TextInputAction.next,
-                textAlign: TextAlign.start,
-                controller: context.read<CategoryProvider>().nameController,
-                title: 'Enter name',
-              ),
-              const SizedBox(height: 32),
-              GlobalButton(
-                  text: "Add",
-                  onTap: () {
-                    if (context
-                        .read<CategoryProvider>()
-                        .nameController
-                        .text
-                        .isNotEmpty) {
-                      context.read<CategoryProvider>().addCategory(
-                            context: context,
-                            categoryModel: CategoryModel(
-                              categoryId: "",
-                              categoryName: context
-                                  .read<CategoryProvider>()
-                                  .nameController
-                                  .text,
-                              description: context
-                                  .read<CategoryProvider>()
-                                  .descriptionController
-                                  .text,
-                              imageUrl: context.read<CategoryProvider>().categoryUrl,
-                              createdAt: DateTime.now().toString(),
-                            ),
-                          );
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CategoryScreenAdmin(),
-                        ),
-                      );
-                      Navigator.pop(context);
-                    }
-                    context.read<CategoryProvider>().nameController.clear();
-                    context
-                        .read<CategoryProvider>()
-                        .descriptionController
-                        .clear();
-                  })
-            ],
-          ),
-        ),
+                        );
+                        Navigator.pop(context);
+                      }
+                      context.read<CategoryProvider>().nameController.clear();
+                      context
+                          .read<CategoryProvider>()
+                          .descriptionController
+                          .clear();
+                    }),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

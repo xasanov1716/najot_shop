@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:najot_shop/ui/auth/widgets/global_button.dart';
 import 'package:najot_shop/ui/auth/widgets/global_text_fields.dart';
@@ -12,144 +10,153 @@ import '../../../providers/category_provider.dart';
 import 'category_screen.dart';
 
 class UpdatePage extends StatefulWidget {
-  const UpdatePage({Key? key}) : super(key: key);
-
+  const UpdatePage({
+    Key? key, required this.categoryModel,
+  }) : super(key: key);
+  final CategoryModel categoryModel;
   @override
   State<UpdatePage> createState() => _UpdatePageState();
 }
-
 class _UpdatePageState extends State<UpdatePage> {
+  ImagePicker picker = ImagePicker();
   File? image;
 
-  Future pickImage() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      setState(() => this.image = imageTemp);
-    } on PlatformException catch (e) {
-      return e;
+  Future<void> _getFromCamera() async {
+    XFile? xFile = await picker.pickImage(
+      source: ImageSource.camera,
+      maxHeight: 512,
+      maxWidth: 512,
+    );
+
+    if (xFile != null) {
+      // ignore: use_build_context_synchronously
+      await Provider.of<CategoryProvider>(context, listen: false)
+          .uploadCategoryImage(context, xFile);
     }
   }
 
-  Future pickCamera() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      setState(() => this.image = imageTemp);
-    } on PlatformException catch (e) {
-      return e;
+  Future<void> _getFromGallery() async {
+    XFile? xFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxHeight: 512,
+      maxWidth: 512,
+    );
+    if (xFile != null) {
+      // ignore: use_build_context_synchronously
+      await Provider.of<CategoryProvider>(context, listen: false)
+          .uploadCategoryImage(context, xFile);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Update Category"),
-        leading: IconButton(
-          onPressed: () {
-            context.read<CategoryProvider>().nameController.clear();
-            context.read<CategoryProvider>().descriptionController.clear();
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back),
+    return WillPopScope(
+      onWillPop: () async {
+        Provider.of<CategoryProvider>(context, listen: false).clearTexts();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Update Category"),
+          leading: IconButton(
+            onPressed: () {
+              context.read<CategoryProvider>().nameController.clear();
+              context.read<CategoryProvider>().descriptionController.clear();
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back),
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+        body: StreamBuilder<List<CategoryModel>>(
+          stream: context.read<CategoryProvider>().getCategories(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<CategoryModel>> snapshot) {
+            return Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
                 children: [
-                  ZoomTapAnimation(
-                    onTap: (){
-                      pickImage();
-                    },
-                    child: Container(
-                      height: 80,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.deepPurpleAccent.withOpacity(0.4),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ZoomTapAnimation(
+                        onTap: () async {
+                          _getFromGallery();
+
+                        },
+                        child: Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.deepPurpleAccent.withOpacity(0.4),
+                          ),
+                          child: const Icon(Icons.image, size: 30),
+                        ),
                       ),
-                      child: const Icon(Icons.image,size: 30),
-                    ),
-                  ),
-                  ZoomTapAnimation(
-                    onTap: (){
-                      pickCamera();
-                    },
-                    child: Container(
-                      height: 80,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.deepPurpleAccent.withOpacity(0.4),
+                      // ClipRRect(
+                      //   borderRadius: BorderRadius.circular(13),
+                      //   child: categoryModels?.first.imageUrl!=null
+                      //       ? CachedNetworkImage(
+                      //           imageUrl: categoryModels!.first.imageUrl,
+                      //           height: 100.h,
+                      //           width: 110.w,
+                      //           fit: BoxFit.cover,
+                      //         )
+                      //       : Image.asset(
+                      //           AppImages.logo,
+                      //           width: 120.w,
+                      //         ),
+                      // ),
+                      ZoomTapAnimation(
+                        onTap: () {
+                          _getFromCamera();
+                        },
+                        child: Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.deepPurpleAccent.withOpacity(0.4),
+                          ),
+                          child: const Icon(Icons.camera_alt, size: 30),
+                        ),
                       ),
-                      child: const Icon(Icons.camera_alt,size: 30),
-                    ),
+                    ],
                   ),
+                  const SizedBox(height: 32),
+                  GlobalTextField(
+                    hintText: 'Enter name',
+                    keyboardType: TextInputType.name,
+                    textInputAction: TextInputAction.next,
+                    textAlign: TextAlign.start,
+                    controller: context.read<CategoryProvider>().nameController,
+                    title: 'Enter name',
+                  ),
+                  const SizedBox(height: 32),
+                  GlobalButton(
+                      text: "Update",
+                      onTap: () {
+                        context.read<CategoryProvider>().updateCategory(
+                          context: context,
+                          categoryModel: widget.categoryModel,
+                          image: "",
+                        );
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CategoryScreenAdmin(),
+                          ),
+                        );
+                        context.read<CategoryProvider>().nameController.clear();
+                        context
+                            .read<CategoryProvider>()
+                            .descriptionController
+                            .clear();
+                      }),
                 ],
               ),
-              const SizedBox(height: 32),
-              GlobalTextField(
-                hintText: 'Enter name',
-                keyboardType: TextInputType.name,
-                textInputAction: TextInputAction.next,
-                textAlign: TextAlign.start,
-                controller: context.read<CategoryProvider>().nameController,
-                title: 'Enter name',
-              ),
-              const SizedBox(height: 12),
-              GlobalTextField(
-                hintText: 'Enter description',
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.next,
-                textAlign: TextAlign.start,
-                controller:
-                context.read<CategoryProvider>().descriptionController,
-                title: 'Enter description',
-              ),
-              const SizedBox(height: 32),
-              GlobalButton(text: "Update", onTap: (){
-                if (context
-                    .read<CategoryProvider>()
-                    .descriptionController
-                    .text
-                    .isNotEmpty &&
-                    context
-                        .read<CategoryProvider>()
-                        .nameController
-                        .text
-                        .isNotEmpty) {
-                  context.read<CategoryProvider>().updateCategory(
-                    context: context,
-                    categoryModel: CategoryModel(
-                      categoryId: "2",
-                      categoryName: context
-                          .read<CategoryProvider>()
-                          .nameController
-                          .text,
-                      description: context
-                          .read<CategoryProvider>()
-                          .descriptionController
-                          .text,
-                      imageUrl: image?.path ?? "",
-                      createdAt: DateTime.now().toString(),
-                    ),
-                  );
-                  Navigator.pushReplacement(context,
-                      CupertinoPageRoute(builder: (context) => const CategoryScreenAdmin()));
-                }
-                context.read<CategoryProvider>().nameController.clear();
-                context.read<CategoryProvider>().descriptionController.clear();
-              })
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

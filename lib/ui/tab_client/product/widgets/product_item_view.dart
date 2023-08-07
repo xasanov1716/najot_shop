@@ -34,85 +34,98 @@ class ProductItemView extends StatelessWidget {
                 blurRadius: 10.r,
               )
             ]),
-        child: Column(
-          children: [
-            SizedBox(height: 10.h),
-            Stack(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProductDetailScreen(
-                            productModel: productModel, index: index),
-                      ),
-                    );
-                  },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15.r),
-                    child: Hero(
-                      tag: productModel.productId,
-                      child: CachedNetworkImage(
-                        imageUrl: productModel.productImages[0],
-                        height: 130.h,
-                        width: 150.w,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(15),
-                        topLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                      ),
-                      color: Colors.white,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Icon(
-                          Icons.favorite_border,
-                          color: AppColors.globalPassive,
+        child: Padding(
+          padding: EdgeInsets.all(10.sp),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductDetailScreen(
+                              productModel: productModel, index: index),
+                        ),
+                      );
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15.r),
+                      child: Hero(
+                        tag: productModel.productId,
+                        child: CachedNetworkImage(
+                          imageUrl: productModel.productImages[0],
+                          height: 130.h,
+                          width: 150.w,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
                   ),
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: Container(
+                      decoration:BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(5.r),
+                          topLeft: Radius.circular(11.r),
+                          bottomRight: Radius.circular(11.r),
+                        ),
+                        color: AppColors.white,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Icon(
+                            Icons.favorite_border,
+                            color: AppColors.globalPassive,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Center(
+                child: Text(
+                  productModel.productName,
+                  style: TextStyle(
+                    fontSize: 25.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.globalActive,
+                  ),
                 ),
-              ],
-            ),
-            Text(
-              productModel.productName,
-              style: TextStyle(
-                fontSize: 22.sp,
-                fontWeight: FontWeight.w700,
-                color: AppColors.globalActive,
               ),
-            ),
-            Text(
-              "${productModel.currency} ${productModel.price}",
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w700,
-                color: AppColors.black,
+              Text(
+                "${productModel.price} ${productModel.currency}",
+                style: TextStyle(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.black,
+                ),
               ),
-            ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: GlobalButton(
-                text: "Add basket",
-                onTap: () {},
+              Text(
+                "Count: ${productModel.count}",
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.globalPassive,
+                ),
               ),
-            )
-          ],
+              Text(
+                productModel.createdAt.substring(0,11),
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.passiveText,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

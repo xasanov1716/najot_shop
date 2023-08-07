@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../data/firebase/order_service.dart';
-import '../data/models/order/order_model.dart';
+import '../data/models/order_model.dart';
 import '../data/models/products_data_model.dart';
 import '../data/models/universal_data.dart';
 import '../utils/ui_utils/loading_dialog.dart';
