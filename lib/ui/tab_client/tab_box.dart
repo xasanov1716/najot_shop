@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:najot_shop/providers/tab_provider.dart';
 import 'package:najot_shop/utils/app_colors.dart';
 import 'package:provider/provider.dart';
@@ -21,10 +22,11 @@ class _TabBoxClientState extends State<TabBoxClient> {
         index: provider.activeIndex,
         color: AppColors.globalActive,
         backgroundColor: AppColors.white,
+        height: 60.h,
         items: [
           Icon(Icons.shopping_cart,color: AppColors.white),
           Icon(Icons.shopping_basket,color: AppColors.white),
-          Icon(Icons.favorite,color: AppColors.white),
+          Icon(Icons.notifications,color: AppColors.white),
           Icon(Icons.account_circle,color: AppColors.white),
         ],
         onTap: (index){

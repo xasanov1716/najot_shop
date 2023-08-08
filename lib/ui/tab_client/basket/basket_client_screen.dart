@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:najot_shop/ui/tab_client/widget/global_shimmer.dart';
 import 'package:najot_shop/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 import '../../../data/models/order_model.dart';
@@ -155,7 +156,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         child: Text(snapshot.error.toString()),
                       );
                     }
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(child: Loading());
                   },
                 ),
               ),
@@ -182,7 +183,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         fontWeight: FontWeight.w500),
                   ),
                   Text(
-                    Provider.of<OrderProvider>(context, listen: true)
+                    Provider.of<OrderProvider>(context,listen: true)
                         .getOrdersPrice()
                         .toString(),
                     style: TextStyle(

@@ -13,14 +13,16 @@ import 'package:najot_shop/providers/product_provider.dart';
 import 'package:najot_shop/providers/profile_provider.dart';
 import 'package:najot_shop/providers/tab_provider.dart';
 import 'package:najot_shop/providers/tab_provider_admin.dart';
+import 'package:najot_shop/services/fcm.dart';
+import 'package:najot_shop/services/local_notification_services.dart';
 import 'package:najot_shop/splash/splash_screen.dart';
 import 'package:najot_shop/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  NotificationService.instance.init();
-  await Firebase.initializeApp();
+  await initFirebase();
+  await LocalNotificationService.instance.setupFlutterNotifications();
   runApp(
     MultiProvider(
       providers: [
