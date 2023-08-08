@@ -27,6 +27,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -166,48 +167,32 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30.h),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: GlobalButton(
-                    text: "Add basket",
-                      onTap: () {
-                        Provider.of<OrderProvider>(context, listen: false).addOrder(
-                          context: context,
-                          orderModel: OrderModel(
-                            count: count,
-                            totalPrice: widget.productModel.price * count,
-                            orderId: "",
-                            productId: widget.productModel.productId,
-                            userId: FirebaseAuth.instance.currentUser!.uid,
-                            orderStatus: "ordered",
-                            createdAt: DateTime.now().toString(),
-                            productName: widget.productModel.productName,
-                          ),
-                        );
-                        NotificationService.instance.showNotification(widget.productModel.productName);
-                      },
-                  ),
-                )
               ],
             ),
           ),
-          GlobalButton(onTap: (){
-            Provider.of<OrderProvider>(context, listen: false).addOrder(
-              context: context,
-              orderModel: OrderModel(
-                count: count,
-                totalPrice: widget.productModel.price * count,
-                orderId: "",
-                productId: widget.productModel.productId,
-                userId: FirebaseAuth.instance.currentUser!.uid,
-                orderStatus: "ordered",
-                createdAt: DateTime.now().toString(),
-                productName: widget.productModel.productName,
-              ),
-            );
-          },text: "Add to Card",),
-          SizedBox(height: 16,)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: GlobalButton(
+              text: "Add basket",
+              onTap: () {
+                Provider.of<OrderProvider>(context, listen: false).addOrder(
+                  context: context,
+                  orderModel: OrderModel(
+                    count: count,
+                    totalPrice: widget.productModel.price * count,
+                    orderId: "",
+                    productId: widget.productModel.productId,
+                    userId: FirebaseAuth.instance.currentUser!.uid,
+                    orderStatus: "ordered",
+                    createdAt: DateTime.now().toString(),
+                    productName: widget.productModel.productName,
+                  ),
+                );
+                NotificationService.instance.showNotification(widget.productModel.productName);
+              },
+            ),
+          ),
+          const SizedBox(height: 16,)
         ],
       ),
     );

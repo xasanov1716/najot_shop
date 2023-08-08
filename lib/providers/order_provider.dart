@@ -15,7 +15,6 @@ class OrderProvider with ChangeNotifier {
   final OrderService orderService;
   List<OrderModel> userOrders = [];
 
-
   Future<ProductModel> getItem({required BuildContext context,required OrderModel orderModel})async{
     showLoading(context: context);
     ProductModel productModel = (FirebaseFirestore.instance
@@ -30,10 +29,8 @@ class OrderProvider with ChangeNotifier {
     }
     return productModel;
   }
-
-
+  int summa = 0;
   int  getOrdersPrice(){
-    int summa = 0;
     for(var element in userOrders){
       summa+=element.totalPrice;
     }
